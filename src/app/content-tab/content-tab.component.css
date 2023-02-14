@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
+
+p {
+    font-weight: bold;
+    color: aqua;
+    width: 100%;
+}
+
+form {
+    width: 90%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.cliente-card{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.title-card {
+    font-family: 'Archivo Narrow', sans-serif;
+}

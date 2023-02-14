@@ -1,0 +1,121 @@
+<mat-grid-list cols="3" rowHeight="1:2">
+    <mat-grid-tile style="margin-top: 20px;">
+        <mat-card class="example-card cliente-card">
+            <mat-card-header>
+              <mat-card-title class="title-card">Datos del Cliente</mat-card-title>
+              <mat-card-subtitle>Ingrese los datos del cliente</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Cliente</mat-label>
+                      <input type="text"
+                             placeholder="Ingrese código o nombre de Cliente"
+                             aria-label="Cliente"
+                             matInput
+                             [formControl]="myControl"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                          {{option}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary">Siguiente</button>
+                  </form>
+            </mat-card-content>
+          </mat-card>
+        
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2">
+        <mat-card class="example-card cliente-card">
+            <mat-card-header>
+              <mat-card-title class="title-card">Materiales</mat-card-title>
+              <mat-card-subtitle>Ingrese los datos de los materiales</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Material</mat-label>
+                      <input type="text"
+                             placeholder="Ingrese código o nombre de Material"
+                             aria-label="Cliente"
+                             matInput
+                             [formControl]="myControl"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                          {{option}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" floatLabel="always">
+                        <mat-label>Cantidad</mat-label>
+                        <input matInput type="number" class="example-right-align" placeholder="0">
+                        <span matTextPrefix></span>
+                        <span matTextSuffix>kg</span>
+                      </mat-form-field>
+
+                    <button mat-raised-button color="primary">Agregar</button>
+                  </form>
+
+                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                      <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                      [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                      </th>
+                      <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection.toggle(row) : null"
+                                      [checked]="selection.isSelected(row)"
+                                      [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                      </td>
+                    </ng-container>
+                  
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef> No. </th>
+                      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                  
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                      <th mat-header-cell *matHeaderCellDef> Weight </th>
+                      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+                  
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        (click)="selection.toggle(row)">
+                    </tr>
+                  </table>         
+                  
+                  <button mat-raised-button color="warn">Eliminar</button>
+                  
+                  <button mat-raised-button color="primary">Finalizar</button>         
+                                    
+            </mat-card-content>
+          </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  
