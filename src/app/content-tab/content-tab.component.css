@@ -1,13 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
 
-p {
-    font-weight: bold;
-    color: aqua;
-    width: 100%;
-}
-
 form {
-    width: 90%;
+    width: 100%;
 }
 
 mat-form-field {
@@ -15,10 +9,83 @@ mat-form-field {
 }
 
 .cliente-card{
-    margin-left: 20px;
-    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+    /*height: 95%;
+    margin: 20px;*/
+    /*padding: 10px;*/
+    position: relative;
+    /*width: 90%;*/
+}
+
+.material-card{
+    /*margin-top: 50px;*/
+    position: relative;
+    width: 95%;
+    height: 95%;
 }
 
 .title-card {
     font-family: 'Archivo Narrow', sans-serif;
+    font-size: 40pt;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.datos-cliente {
+    padding: 20px;
+}
+
+.subtitle-cliente {
+    font-style: italic;
+}
+
+mat-label{
+    color: #444;
+}
+
+.pie-cliente {
+    background-color: #ff4081;
+    border-radius: 0 0 10px 10px;
+    bottom:0;
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+}
+
+.pie-cliente-clicked{
+    background-color: gray;
+}
+
+.pie-cliente p{
+    color: white;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mat-grid-tile-content {
+    align-items: self-start important!;
+}
+
+mat-grid-tile :first-child{
+    align-items: self-start important!;
+}
+
+.cliente-card-full{
+    height: 95%;
+    width: 90%;
+}
+
+.boton-derecha{
+    float: right;
+}
+
+.agregar-material{
+    margin-bottom: 50px;
+}
+
+.finalizar-ticket{
+    margin-top: 20px;
 }

@@ -1,21 +1,23 @@
-<img src="../../assets/images/logo.png" />
+<img class="logo" src="../../assets/images/logo.png" />
 
 <!--mat-form-field appearance="fill">
   <mat-label>Selected tab index</mat-label>
   <input matInput type="number" [formControl]="selected">
 </mat-form-field-->
 
-<div>
-  <button mat-raised-button
+<div class="boton-nuevo-ticket">
+  <button mat-raised-button color="accent"
           class="example-add-tab-button"
           (click)="addTab(true)">
-    Nuevo ticket
+    <span class="material-symbols-outlined" style="font-size: 16px;">
+      note_add
+    </span> Nuevo ticket 
   </button>
   <!--mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox-->
 </div>
 
 <mat-tab-group [selectedIndex]="selected.value"
-               (selectedIndexChange)="selected.setValue($event)">
+               (selectedIndexChange)="selected.setValue($event)" backgroundColor=primary>
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
     <!--
       Contents for {{tab}} tab

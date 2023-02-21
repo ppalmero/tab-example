@@ -8,9 +8,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import { ContentTabComponent } from './content-tab/content-tab.component';
+import { DialogGenenarTicketComponent } from './dialog-genenar-ticket/dialog-genenar-ticket.component';
 
 @NgModule({
-  declarations: [TabGroupDynamicExample, ContentTabComponent],
+  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

@@ -1,0 +1,23 @@
+<div class="ticket-dialog">
+  <p class="ticket-numero">Ticket: {{data.nroTicket}}</p>
+  <mat-card class="ticket-card">
+    <mat-card-header>
+      <mat-card-title>Cliente: {{data.nombreCliente}}</mat-card-title>
+      <mat-card-subtitle>Ciudad: {{data.ciudadCliente}}</mat-card-subtitle>
+      <mat-card-subtitle>Observaciones {{data.observaciones}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Materiales:</p>
+      <mat-selection-list>
+        <mat-list-item *ngFor="let material of data.listaMateriales">
+          {{material.name}} - {{material.weight}}
+        </mat-list-item>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>Cancelar</button>
+      <button mat-button>Enviar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

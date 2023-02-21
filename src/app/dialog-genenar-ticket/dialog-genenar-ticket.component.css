@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
+
+.ticket-card {
+    max-width: 400px;
+}
+
+.ticket-dialog{
+    background-color: #ddd;
+    padding: 30px;
+}
+
+.ticket-numero{
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 20pt;
+    font-weight: bold;
+}

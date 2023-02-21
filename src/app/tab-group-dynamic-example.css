@@ -3,3 +3,12 @@
 .example-delete-tab-button {
   margin: 8px;
 }
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.boton-nuevo-ticket{
+  float:right;
+  position: relative;
+}
