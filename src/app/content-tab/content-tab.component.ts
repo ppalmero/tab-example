@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -23,8 +23,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }*/
 
 const ELEMENT_DATA: Material[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079},
-  /*{position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  /*{position: 1, name: 'Hydrogen', weight: 1.0079},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
@@ -41,6 +41,8 @@ const ELEMENT_DATA: Material[] = [
   styleUrls: ['./content-tab.component.css']
 })
 export class ContentTabComponent {
+  @Input() ticket : number;
+  miTicket : number = -1;
   clienteNombreFormControl = new FormControl('', [Validators.required]);
   clienteCiudadFormControl = new FormControl('', [Validators.required]);
   clienteObservacionesFormControl = new FormControl('');
@@ -69,6 +71,7 @@ export class ContentTabComponent {
   constructor(public dialog: MatDialog) {}
   
   ngOnInit() {
+    this.miTicket = this.ticket;
     this.filteredOptionsCliente = this.clienteNombreFormControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterClient(value || '')),

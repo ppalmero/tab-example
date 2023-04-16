@@ -12,3 +12,8 @@
   float:right;
   position: relative;
 }
+
+.img-espera {
+  display: block;
+  margin: 0 auto;
+}

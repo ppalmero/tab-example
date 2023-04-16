@@ -10,7 +10,7 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['tab-group-dynamic-example.css'],
 })
 export class TabGroupDynamicExample {
-  tabs = ['Ticket N°'];
+  tabs:string[] = [];
   selected = new FormControl(0);
   nroTicket: number = 0;
 

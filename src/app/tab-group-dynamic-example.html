@@ -16,6 +16,8 @@
   <!--mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox-->
 </div>
 
+<img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0"/>
+
 <mat-tab-group [selectedIndex]="selected.value"
                (selectedIndexChange)="selected.setValue($event)" backgroundColor=primary>
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
@@ -29,6 +31,6 @@
       Finalizar
     </button>
   -->
-    <app-content-tab></app-content-tab>
+    <app-content-tab [ticket] = "nroTicket - 1"></app-content-tab>
   </mat-tab>
 </mat-tab-group>
