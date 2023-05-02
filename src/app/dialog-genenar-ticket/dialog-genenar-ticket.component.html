@@ -10,7 +10,7 @@
       <p>Materiales:</p>
       <mat-selection-list>
         <mat-list-item *ngFor="let material of data.listaMateriales">
-          {{material.name}} - {{material.weight}}
+          {{material.codigo}} - {{material.name}}: {{material.weight}}kg
         </mat-list-item>
       </mat-selection-list>
     </mat-card-content>

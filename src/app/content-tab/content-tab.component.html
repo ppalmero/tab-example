@@ -25,18 +25,18 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Ciudad</mat-label>
+                <mat-label>Número de teléfono</mat-label>
                 <input type="text"
-                       placeholder="Ingrese nombre de Ciudad"
+                       placeholder="Teléfono"
                        aria-label="Ciudad"
                        matInput
-                       [formControl]="clienteCiudadFormControl"
-                       [matAutocomplete]="autoCiudad">
-                <mat-autocomplete #autoCiudad="matAutocomplete">
+                       [formControl]="clienteTelefonoFormControl">
+                       <!--[matAutocomplete]="autoCiudad"-->
+                <!--mat-autocomplete #autoCiudad="matAutocomplete">
                   <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
                     {{option}}
                   </mat-option>
-                </mat-autocomplete>
+                </mat-autocomplete-->
               </mat-form-field>
               <mat-form-field class="example-full-width">
                 <mat-label>Observaciones</mat-label>
@@ -153,7 +153,7 @@
                             [disabled]="isDisabledCliente"
                             mat-raised-button color="primary"
                             (click)="generarTicket()">
-                      Finalizar {{miTicket}}
+                      Finalizar ticket {{miTicket}}
                     </button>         
                                       
         </div>

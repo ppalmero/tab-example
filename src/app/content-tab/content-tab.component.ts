@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogGenenarTicketComponent } from '../dialog-genenar-ticket/dialog-genenar-ticket.component';
 import { Material } from '../model/material';
 import { Ticket } from '../model/ticket';
+import { ComunicacionService } from '../comunicacion/comunicacion.service';
+import { Clientes } from '../objetos/clientes';
+import { Materiales } from '../objetos/materiales';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -44,16 +47,16 @@ export class ContentTabComponent {
   @Input() ticket : number;
   miTicket : number = -1;
   clienteNombreFormControl = new FormControl('', [Validators.required]);
-  clienteCiudadFormControl = new FormControl('', [Validators.required]);
+  clienteTelefonoFormControl = new FormControl('', [Validators.required]);
   clienteObservacionesFormControl = new FormControl('');
   materialesFormControl = new FormControl({value:'', disabled: true});
   pesoFormControl = new FormControl({value:'', disabled: true});
 
-  optionsCliente: string[] = ['One', 'Two', 'Three'];
-  optionsCiudad: string[] = ['One', 'Two', 'Three'];
-  optionsMaterial: string[] = ['One', 'Two', 'Three'];
+  optionsCliente: Clientes[] = [];
+  //optionsCiudad: string[] = ['One', 'Two', 'Three'];
+  optionsMaterial: Materiales[] = [];
   filteredOptionsCliente: Observable<string[]>;
-  filteredOptionsCiudad: Observable<string[]>;
+  //filteredOptionsCiudad: Observable<string[]>;
   filteredOptionsMaterial: Observable<string[]>;
   displayedColumns: string[] = ['select', 'Material', 'Peso'];
   dataSource = new MatTableDataSource<Material>(ELEMENT_DATA);
@@ -68,7 +71,10 @@ export class ContentTabComponent {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(public dialog: MatDialog) {}
+  clientes!: Clientes[];
+  materiales!: Materiales[];
+
+  constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService) {}
   
   ngOnInit() {
     this.miTicket = this.ticket;
@@ -76,32 +82,48 @@ export class ContentTabComponent {
       startWith(''),
       map(value => this._filterClient(value || '')),
     );
-    this.filteredOptionsCiudad = this.clienteCiudadFormControl.valueChanges.pipe(
+    /*this.filteredOptionsCiudad = this.clienteTelefonoFormControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCiudad(value || '')),
-    );
+    );*/
     this.filteredOptionsMaterial = this.materialesFormControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterMaterial(value || '')),
     );
+
+    this.comunicacionService.getStockPrices().subscribe(data => {
+      this.clientes = data;
+      this.optionsCliente = data;
+      console.log(this.optionsCliente);
+    });
+
+    this.clienteNombreFormControl.valueChanges.subscribe(valor => {
+      const clientesFiltro:Clientes[] = this.optionsCliente.filter(
+        (elemento) => elemento.nombre.includes(valor!));
+      if (clientesFiltro.length > 0){
+        this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefono);
+      }
+    });
   }
 
   private _filterClient(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.optionsCliente.filter(option => option.toLowerCase().includes(filterValue));
+    const clientesFiltro =  this.optionsCliente.map((elemento) => elemento.nombre);
+    return clientesFiltro.filter(option => option.toLowerCase().includes(filterValue));
   }
   
-  private _filterCiudad(value: string): string[] {
+  /*private _filterCiudad(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.optionsCiudad.filter(option => option.toLowerCase().includes(filterValue));
-  }
+  }*/
   
   private _filterMaterial(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.optionsMaterial.filter(option => option.toLowerCase().includes(filterValue));
+    const materialesFiltro =  this.optionsMaterial.map((elemento) => elemento.codigo + " - " + elemento.descripcion);
+    return materialesFiltro.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -149,8 +171,10 @@ export class ContentTabComponent {
   }
 
   agregarMaterial(){
+    const nombreCodigoMaterial: string[] = this.materialesFormControl.value!.split(" - "); 
     this.dataSource.data.push({position: this.dataSource.data.length, 
-                                name: this.materialesFormControl.value!, 
+                                codigo: Number.parseInt(nombreCodigoMaterial[0]),
+                                name: nombreCodigoMaterial[1], 
                                 weight: Number.parseFloat(this.pesoFormControl.value!)});
     this.table.renderRows();
     console.log(this.dataSource.data);
@@ -171,21 +195,25 @@ export class ContentTabComponent {
   }
 
   clienteSiguiente(){
-    if (this.optionsCliente.includes(this.clienteNombreFormControl.value!) &&
-        this.optionsCiudad.includes(this.clienteCiudadFormControl.value!)){
+    if (this.optionsCliente.map((elemento) => elemento.nombre).includes(this.clienteNombreFormControl.value!)){
       this.classPie = "pie-cliente pie-cliente-clicked";
       this.materialesFormControl.enable({onlySelf:true});
       this.pesoFormControl.enable({onlySelf:true});
       this.isDisabledCliente = false;
+      this.comunicacionService.getListaMateriales().subscribe(data => {
+        this.materiales = data;
+        this.optionsMaterial = data;
+        console.log(this.materiales);
+      });
     } else {
-      alert("Debe elegir clientes y ciudades de la lista desplegable.")
+      alert("Debe elegir clientes de la lista desplegable.")
     }
   }
 
   generarTicket(){
     let ticket = new Ticket(1,
                             this.clienteNombreFormControl.value!, 
-                            this.clienteCiudadFormControl.value!,
+                            this.clienteTelefonoFormControl.value!,
                             this.clienteObservacionesFormControl.value!,
                             this.dataSource.data);
     console.log(ticket);
