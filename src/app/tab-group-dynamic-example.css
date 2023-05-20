@@ -1,6 +1,9 @@
+/*** COLOR SECUNDARIO: #a9d035 ***/
+
 .example-input-label,
 .example-add-tab-button,
 .example-delete-tab-button {
+  background-color: #00a650 !important;
   margin: 8px;
 }
 
@@ -16,4 +19,8 @@
 .img-espera {
   display: block;
   margin: 0 auto;
+}
+
+.mat-mdc-raised-button{
+  background-color: aqua;
 }
