@@ -9,9 +9,11 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import { ContentTabComponent } from './content-tab/content-tab.component';
 import { DialogGenenarTicketComponent } from './dialog-genenar-ticket/dialog-genenar-ticket.component';
+import { FilterClientePipe } from './content-tab/filtros/filter-cliente.pipe';
+import { FilterMaterialPipe } from './content-tab/filtros/filter-material.pipe';
 
 @NgModule({
-  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent],
+  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

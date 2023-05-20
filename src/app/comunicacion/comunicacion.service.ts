@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap, timer } from 'rxjs';
-import { Materiales } from '../objetos/materiales';
-import { Clientes } from '../objetos/clientes';
+import { Materiales } from '../model/materiales';
+import { Clientes } from '../model/clientes';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,13 @@ export class ComunicacionService {
 
   constructor(private http: HttpClient) { }
 
-  getStockPrices(): Observable<Clientes[]> {
+  getListaClientes(): Observable<Clientes[]> {
     // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
-    return this.http.get<Clientes[]>(this.apiUrlClientes);
+    return this.http.get<Clientes[]>('assets/clientes.json');
   }
 
   getListaMateriales(): Observable<Materiales[]> {
     // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
-    return this.http.get<Materiales[]>(this.apiUrlListaMateriales);
+    return this.http.get<Materiales[]>('assets/materiales.json');
   }
 }
