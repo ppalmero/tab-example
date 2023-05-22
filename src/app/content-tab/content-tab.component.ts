@@ -20,7 +20,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 
-const ELEMENT_DATA: Material[] = [];
 
 @Component({
   selector: 'app-content-tab',
@@ -28,6 +27,7 @@ const ELEMENT_DATA: Material[] = [];
   styleUrls: ['./content-tab.component.css']
 })
 export class ContentTabComponent {
+  ELEMENT_DATA: Material[] = [];
   @Input() ticket : number;
   miTicket : number = -1;
   clienteNombreFormControl = new FormControl('', [Validators.required]);
@@ -41,7 +41,7 @@ export class ContentTabComponent {
   //filteredOptionsCliente: Observable<string[]>;
   //filteredOptionsMaterial: Observable<string[]>;
   displayedColumns: string[] = ['select', 'Material', 'Peso'];
-  dataSource = new MatTableDataSource<Material>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Material>(this.ELEMENT_DATA);
   selection = new SelectionModel<Material>(true, []);
 
   @ViewChild(MatTable) table: MatTable<Material>;
@@ -171,7 +171,7 @@ export class ContentTabComponent {
   }
 
   generarTicket(){
-    let ticket = new Ticket(1,
+    let ticket = new Ticket(this.ticket,
                             this.clienteNombreFormControl.value!, 
                             this.clienteTelefonoFormControl.value!,
                             this.clienteObservacionesFormControl.value!,

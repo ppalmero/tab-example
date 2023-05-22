@@ -10,9 +10,9 @@ export class FilterClientePipe implements PipeTransform {
     if (!items) return [];
     if (!searchTerm) return items;
     searchTerm = searchTerm.toString().toLowerCase();
-    return items.filter((item) => item.dniCliente.toString().includes(searchTerm) ||
+    return items.filter((item) => item.dniCliente.toString().includes(searchTerm)/* ||
                                   item.nombreCliente.toLowerCase().includes(searchTerm) || 
-                                  item.apellidoCliente.toLowerCase().includes(searchTerm));
+                                  item.apellidoCliente.toLowerCase().includes(searchTerm)*/);
   }
 
 }

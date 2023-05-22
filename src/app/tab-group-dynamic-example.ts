@@ -12,7 +12,7 @@ import {FormControl} from '@angular/forms';
 export class TabGroupDynamicExample {
   tabs:string[] = [];
   selected = new FormControl(0);
-  nroTicket: number = 0;
+  nroTicket: number = 1;
 
   addTab(selectAfterAdding: boolean) { 
     //consultar número de ticket siguiente

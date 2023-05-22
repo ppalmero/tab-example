@@ -10,7 +10,7 @@
                 Ingrese los datos del cliente
             </p>
             <form class="example-form">
-              <mat-form-field class="example-full-width" appearance="fill">
+              <mat-form-field class="input-clientes" appearance="fill">
                 <mat-label>Cliente</mat-label>
                 <input type="text"
                        placeholder="Ingrese DNI o nombre de Cliente"
@@ -27,7 +27,7 @@
                   </mat-option-->
                 </mat-autocomplete>
               </mat-form-field>
-              <mat-form-field class="example-full-width" appearance="fill">
+              <mat-form-field class="input-clientes" appearance="fill">
                 <mat-label>Número de teléfono</mat-label>
                 <input type="text"
                        placeholder="Teléfono"
@@ -41,7 +41,7 @@
                   </mat-option>
                 </mat-autocomplete-->
               </mat-form-field>
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="input-clientes">
                 <mat-label>Observaciones</mat-label>
                 <textarea matInput 
                           [formControl]="clienteObservacionesFormControl"
@@ -75,7 +75,7 @@
             Ingrese los datos de los materiales
           </p>
                   <form class="example-form">
-                      <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-form-field class="input-materiales" appearance="fill">
                         <mat-label>Material</mat-label>
                         <input type="text"
                               placeholder="Ingrese código o nombre de Material"
@@ -90,7 +90,7 @@
                         </mat-autocomplete>
                       </mat-form-field>
 
-                      <mat-form-field appearance="fill" floatLabel="always">
+                      <mat-form-field class="input-materiales" appearance="fill" floatLabel="always">
                           <mat-label>Peso</mat-label>
                           <input matInput type="number" 
                                 class="example-right-align" 

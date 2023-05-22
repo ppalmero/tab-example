@@ -4,8 +4,11 @@ form {
     width: 100%;
 }
 
-mat-form-field {
+.input-clientes{
     width: 100%;
+}
+.input-materiales{
+    width: 80%;
 }
 
 .cliente-card{
@@ -28,7 +31,7 @@ mat-form-field {
 
 .title-card {
     font-family: 'Archivo Narrow', sans-serif;
-    font-size: 40pt;
+    font-size: 28pt;
     margin-bottom: 0px;
     margin-top: 0px;
 }
@@ -60,7 +63,7 @@ mat-label{
 
 .pie-cliente p{
     color: white;
-    font-size: 16pt;
+    font-size: 14pt;
     font-weight: bold;
     text-align: center;
 }
@@ -83,9 +86,11 @@ mat-grid-tile :first-child{
 }
 
 .agregar-material{
+    background-color: #a9d035;
     margin-bottom: 50px;
 }
 
 .finalizar-ticket{
+    background-color: #00a650;
     margin-top: 20px;
 }
