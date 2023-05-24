@@ -130,13 +130,27 @@ export class ContentTabComponent {
   }
 
   agregarMaterial(){
+    if (!this.materialesFormControl.value){
+      alert("Ingrese material");
+      return;
+    }
+    if (!this.pesoFormControl.value){
+      alert("Ingrese peso");
+      return;
+    }
     const nombreCodigoMaterial: string[] = this.materialesFormControl.value!.split(" - "); 
-    this.dataSource.data.push({position: this.dataSource.data.length, 
+    const materialSumaPeso = this.dataSource.data.find(obj => obj.codigo === Number.parseInt(nombreCodigoMaterial[0]));
+    if (materialSumaPeso) {
+      console.log("material " + nombreCodigoMaterial[1] + " encontrado");
+      materialSumaPeso.weight += Number.parseFloat(this.pesoFormControl.value!);
+    } else {
+      this.dataSource.data.push({position: this.dataSource.data.length, 
                                 codigo: Number.parseInt(nombreCodigoMaterial[0]),
                                 name: nombreCodigoMaterial[1], 
                                 weight: Number.parseFloat(this.pesoFormControl.value!)});
+    }
     this.table.renderRows();
-    console.log(this.dataSource.data);
+    //console.log(this.dataSource.data);
     this.materialesFormControl.setValue("");
     this.pesoFormControl.setValue("");
   }

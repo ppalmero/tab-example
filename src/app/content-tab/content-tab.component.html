@@ -82,7 +82,8 @@
                               aria-label="Material"
                               matInput
                               [formControl]="materialesFormControl"
-                              [matAutocomplete]="autoMaterial">
+                              [matAutocomplete]="autoMaterial"
+                              required>
                         <mat-autocomplete #autoMaterial="matAutocomplete">
                           <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial" [value]="option.idMaterial + ' - ' + option.nombreMaterial">
                             {{option.idMaterial + ' - ' + option.nombreMaterial}}
@@ -95,7 +96,8 @@
                           <input matInput type="number" 
                                 class="example-right-align" 
                                 placeholder="0"
-                                [formControl]="pesoFormControl">
+                                [formControl]="pesoFormControl"
+                                required>
                           <span matTextPrefix></span>
                           <span matTextSuffix>kg</span>
                         </mat-form-field>
