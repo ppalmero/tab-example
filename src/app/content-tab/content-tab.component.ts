@@ -31,8 +31,9 @@ export class ContentTabComponent {
   @Input() ticket : number;
   miTicket : number = -1;
   clienteNombreFormControl = new FormControl('', [Validators.required]);
-  clienteTelefonoFormControl = new FormControl('', [Validators.required]);
-  clienteObservacionesFormControl = new FormControl('');
+  clienteDNIFormControl = new FormControl({value:'', disabled: true});
+  clienteTelefonoFormControl = new FormControl({value:'', disabled: true});
+  //clienteObservacionesFormControl = new FormControl('');
   materialesFormControl = new FormControl({value:'', disabled: true});
   pesoFormControl = new FormControl({value:'', disabled: true});
 
@@ -74,9 +75,10 @@ export class ContentTabComponent {
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
       const clientesFiltro:Clientes[] = this.optionsCliente.filter(
-        (elemento) => (elemento.dniCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente).includes(valor!));
+        (elemento) => (elemento.id_cliente + " - " + elemento.nombre_cliente + " " + elemento.apellido_cliente).includes(valor!));
       if (clientesFiltro.length > 0){
-        this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefonoCliente);
+        this.clienteDNIFormControl.setValue(clientesFiltro[0].dni_cliente.toString());
+        this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefono_cliente);
       }
     });
 
@@ -168,11 +170,16 @@ export class ContentTabComponent {
   }
 
   clienteSiguiente(){
-    if (this.optionsCliente.map((elemento) => elemento.dniCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente)
+    if (!this.isDisabledCliente){
+      return;
+    }
+    console.log(this.clienteNombreFormControl.value!);
+    if (this.optionsCliente.map((elemento) => elemento.id_cliente + " - " + elemento.nombre_cliente + " " + elemento.apellido_cliente)
                                               .includes(this.clienteNombreFormControl.value!)){
       this.classPie = "pie-cliente pie-cliente-clicked";
       this.materialesFormControl.enable({onlySelf:true});
       this.pesoFormControl.enable({onlySelf:true});
+      this.clienteNombreFormControl.disable({onlySelf:true});
       this.isDisabledCliente = false;
       this.comunicacionService.getListaMateriales().subscribe(data => {
         this.materiales = data;
@@ -187,8 +194,8 @@ export class ContentTabComponent {
   generarTicket(){
     let ticket = new Ticket(this.ticket,
                             this.clienteNombreFormControl.value!, 
+                            this.clienteDNIFormControl.value!,
                             this.clienteTelefonoFormControl.value!,
-                            this.clienteObservacionesFormControl.value!,
                             this.dataSource.data);
     console.log(ticket);
     const dialogRef = this.dialog.open(DialogGenenarTicketComponent, {

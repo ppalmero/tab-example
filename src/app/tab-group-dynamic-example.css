@@ -9,7 +9,7 @@
 
 .logo {
   margin-bottom: 20px;
-  width: 10%;
+  width: 7%;
 }
 
 .boton-nuevo-ticket{
@@ -24,4 +24,13 @@
 
 .mat-mdc-raised-button{
   background-color: aqua;
+}
+
+.boton-derecha{
+  float: right;
+  z-index: 1000;
+}
+
+.tab-group{
+  width: 100%;
 }

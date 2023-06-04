@@ -31,17 +31,20 @@ form {
 
 .title-card {
     font-family: 'Archivo Narrow', sans-serif;
-    font-size: 28pt;
+    font-size: 20pt;
     margin-bottom: 0px;
     margin-top: 0px;
 }
 
 .datos-cliente {
-    padding: 20px;
+    padding: 10px;
 }
 
 .subtitle-cliente {
+    color: gray;
+    font-size: small;
     font-style: italic;
+    margin: 0;
 }
 
 mat-label{

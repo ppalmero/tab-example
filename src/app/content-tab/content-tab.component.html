@@ -19,13 +19,27 @@
                        [formControl]="clienteNombreFormControl"
                        [matAutocomplete]="autoCliente">
                 <mat-autocomplete #autoCliente="matAutocomplete">
-                  <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente" [value]="option.dniCliente + ' - ' + option.nombreCliente + ' ' + option.apellidoCliente">
-                    {{option.dniCliente + " - " + option.nombreCliente + " " + option.apellidoCliente}}
+                  <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente" [value]="option.id_cliente + ' - ' + option.nombre_cliente + ' ' + option.apellido_cliente">
+                    {{option.id_cliente + " - " + option.nombre_cliente + " " + option.apellido_cliente}}
                   </mat-option>
                   <!--mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
                     {{option}}
                   </mat-option-->
                 </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="input-clientes" appearance="fill">
+                <mat-label>Número de documento</mat-label>
+                <input type="text"
+                       placeholder="Número de documento"
+                       aria-label="Ciudad"
+                       matInput
+                       [formControl]="clienteDNIFormControl">
+                       <!--[matAutocomplete]="autoCiudad"-->
+                <!--mat-autocomplete #autoCiudad="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete-->
               </mat-form-field>
               <mat-form-field class="input-clientes" appearance="fill">
                 <mat-label>Número de teléfono</mat-label>
@@ -41,13 +55,13 @@
                   </mat-option>
                 </mat-autocomplete-->
               </mat-form-field>
-              <mat-form-field class="input-clientes">
+              <!--mat-form-field class="input-clientes">
                 <mat-label>Observaciones</mat-label>
                 <textarea matInput 
                           [formControl]="clienteObservacionesFormControl"
                           placeholder="Indique si existe alguna observación a tener en cuenta...">
                 </textarea>
-              </mat-form-field>
+              </mat-form-field-->
                 <!--button mat-raised-button color="primary">Siguiente</button-->
               </form>
           </div>
@@ -141,7 +155,7 @@
                       <!-- Weight Column -->
                       <ng-container matColumnDef="Peso">
                         <th mat-header-cell *matHeaderCellDef> Peso </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}}kg </td>
                       </ng-container>
                     
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

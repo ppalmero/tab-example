@@ -7,20 +7,18 @@
 
 <div class="boton-nuevo-ticket">
   <p>Usuario: Pablo Palmero</p>
-  <button mat-raised-button color="accent"
-          class="example-add-tab-button"
-          (click)="addTab(true)">
+  <button mat-raised-button color="accent" class="example-add-tab-button" (click)="addTab(true)">
     <span class="material-symbols-outlined" style="font-size: 16px;">
       note_add
-    </span> Nuevo ticket 
+    </span> Nuevo ticket
   </button>
   <!--mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox-->
 </div>
 
-<img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0"/>
+<img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0" />
 
-<mat-tab-group [selectedIndex]="selected.value"
-               (selectedIndexChange)="selected.setValue($event)" backgroundColor=primary>
+<mat-tab-group class="tab-group" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
+  backgroundColor=primary>
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
     <!--
       Contents for {{tab}} tab
@@ -32,6 +30,10 @@
       Finalizar
     </button>
   -->
-    <app-content-tab [ticket] = "nroTicket - 1"></app-content-tab>
+
+    <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-content-tab [ticket]="nroTicket - 1"></app-content-tab>
   </mat-tab>
 </mat-tab-group>
