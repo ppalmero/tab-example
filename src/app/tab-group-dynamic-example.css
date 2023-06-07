@@ -28,6 +28,7 @@
 
 .boton-derecha{
   float: right;
+  margin: 5px; 
   z-index: 1000;
 }
 
