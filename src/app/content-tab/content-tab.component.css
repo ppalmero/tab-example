@@ -15,18 +15,20 @@ form {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+    float: left;
     /*height: 95%;
     margin: 20px;*/
     /*padding: 10px;*/
     position: relative;
-    /*width: 90%;*/
+    width: 30%;
 }
 
 .material-card{
     /*margin-top: 50px;*/
+    display: flow-root;
     position: relative;
-    width: 95%;
-    height: 95%;
+    width: 65%;
+    /*height: 95%;*/
 }
 
 .title-card {
@@ -96,4 +98,10 @@ mat-grid-tile :first-child{
 .finalizar-ticket{
     background-color: #00a650;
     margin-top: 20px;
+}
+
+@media only screen and (max-width: 576px) {
+    .cliente-card{
+        width: 100%;
+    }
 }

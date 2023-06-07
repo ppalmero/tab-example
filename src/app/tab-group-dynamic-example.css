@@ -8,8 +8,8 @@
 }
 
 .logo {
-  margin-bottom: 20px;
-  width: 7%;
+  margin-bottom: 10px;
+  max-width: 100px;
 }
 
 .boton-nuevo-ticket{
