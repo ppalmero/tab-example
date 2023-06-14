@@ -206,4 +206,8 @@ export class ContentTabComponent {
       console.log('The dialog was closed');
     });
   }
+
+  agregarCliente(){
+    
+  }
 }

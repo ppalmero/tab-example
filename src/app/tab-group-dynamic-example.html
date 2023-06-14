@@ -6,12 +6,25 @@
 </mat-form-field-->
 
 <div class="boton-nuevo-ticket">
-  <p>Usuario: Pablo Palmero</p>
   <button mat-raised-button color="accent" class="example-add-tab-button" (click)="addTab(true)">
     <span class="material-symbols-outlined" style="font-size: 16px;">
       note_add
     </span> Nuevo ticket
   </button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="boton-menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>confirmation_number</mat-icon>
+      <span>Consulta tickets</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>no_accounts</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+  </mat-menu>
+
   <!--mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox-->
 </div>
 

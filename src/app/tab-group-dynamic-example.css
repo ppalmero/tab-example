@@ -5,6 +5,11 @@
 .example-delete-tab-button {
   background-color: #00a650 !important;
   margin: 8px;
+  width: 100%;
+}
+
+.boton-menu {
+  float: right;
 }
 
 .logo {
