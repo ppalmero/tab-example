@@ -10,10 +10,10 @@ export class FilterClientePipe implements PipeTransform {
     if (!items) return [];
     if (!searchTerm) return items;
     searchTerm = searchTerm.toString().toLowerCase();
-    return items.filter((item) => item.id_cliente.toString().includes(searchTerm) ||
-                                  item.dni_cliente.toString().includes(searchTerm) ||
-                                  item.nombre_cliente.toLowerCase().includes(searchTerm) || 
-                                  item.apellido_cliente.toLowerCase().includes(searchTerm));
+    return items.filter((item) => item.idCliente.toString().includes(searchTerm) ||
+                                  item.dniCliente.toString().includes(searchTerm) ||
+                                  item.nombreCliente.toLowerCase().includes(searchTerm) || 
+                                  item.apellidoCliente.toLowerCase().includes(searchTerm));
   }
 
 }

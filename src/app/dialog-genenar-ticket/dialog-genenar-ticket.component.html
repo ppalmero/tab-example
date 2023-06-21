@@ -15,8 +15,8 @@
       </mat-selection-list>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button>Cancelar</button>
-      <button mat-button>Enviar</button>
+      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button [mat-dialog-close]="resultOK">Enviar</button>
     </mat-card-actions>
   </mat-card>
 </div>

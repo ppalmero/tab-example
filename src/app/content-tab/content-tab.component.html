@@ -25,8 +25,9 @@
                        [formControl]="clienteNombreFormControl"
                        [matAutocomplete]="autoCliente">
                 <mat-autocomplete #autoCliente="matAutocomplete">
-                  <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente" [value]="option.id_cliente + ' - ' + option.nombre_cliente + ' ' + option.apellido_cliente">
-                    {{option.id_cliente + " - " + option.nombre_cliente + " " + option.apellido_cliente}}
+                  <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente" 
+                    [value]="option.idCliente + ' - ' + option.nombreCliente + ' ' + option.apellidoCliente">
+                    {{option.idCliente + " - " + option.nombreCliente + " " + option.apellidoCliente}}
                   </mat-option>
                   <!--mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
                     {{option}}

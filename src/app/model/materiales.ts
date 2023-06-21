@@ -1,5 +1,6 @@
 export interface Materiales {
     idMaterial: number,
     nombreMaterial: string,
-    precioMaterial: number
+    precioMaterial: number,
+    tipoMedidaMaterial: string
 }

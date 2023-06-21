@@ -10,6 +10,9 @@ import { Ticket } from '../model/ticket';
 import { ComunicacionService } from '../comunicacion/comunicacion.service';
 import { Clientes } from '../model/clientes';
 import { Materiales } from '../model/materiales';
+import { EstadosCompras } from '../model/enums';
+import { Compras } from '../model/compras';
+import { Items } from '../model/items';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -18,8 +21,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
-
-
 
 @Component({
   selector: 'app-content-tab',
@@ -60,6 +61,8 @@ export class ContentTabComponent {
   searchTerm: string = "";
   ingresaCliente: string = "";
   ingresaMaterial: string = "";
+  clienteElegido: Clientes;
+  listaItems: Items[]=[];
 
   constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService) {}
   
@@ -75,10 +78,11 @@ export class ContentTabComponent {
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
       const clientesFiltro:Clientes[] = this.optionsCliente.filter(
-        (elemento) => (elemento.id_cliente + " - " + elemento.nombre_cliente + " " + elemento.apellido_cliente).includes(valor!));
+        (elemento) => (elemento.idCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente).includes(valor!));
       if (clientesFiltro.length > 0){
-        this.clienteDNIFormControl.setValue(clientesFiltro[0].dni_cliente.toString());
-        this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefono_cliente);
+        this.clienteElegido = clientesFiltro[0];
+        this.clienteDNIFormControl.setValue(clientesFiltro[0].dniCliente.toString());
+        this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefonoCliente);
       }
     });
 
@@ -101,7 +105,6 @@ export class ContentTabComponent {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
-    
     console.log("Toggle");
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -174,7 +177,7 @@ export class ContentTabComponent {
       return;
     }
     console.log(this.clienteNombreFormControl.value!);
-    if (this.optionsCliente.map((elemento) => elemento.id_cliente + " - " + elemento.nombre_cliente + " " + elemento.apellido_cliente)
+    if (this.optionsCliente.map((elemento) => elemento.idCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente)
                                               .includes(this.clienteNombreFormControl.value!)){
       this.classPie = "pie-cliente pie-cliente-clicked";
       this.materialesFormControl.enable({onlySelf:true});
@@ -203,7 +206,22 @@ export class ContentTabComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("---DATASOURCE---");
+        console.log(this.dataSource.data);
+
+      if (result == EstadosCompras.NOPAGADA) {
+        for (let i = 0; i < this.dataSource.data.length; i++){
+          this.listaItems.push({cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioEspecialItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].codigo)!});
+        }
+        let compra: Compras={idCompra: -1, precioTotalCompra:-1,estado:EstadosCompras.NOPAGADA,cliente:this.clienteElegido,items:this.listaItems};
+        console.log("---COMPRA---");
+        console.log(compra);
+        /*** ENVIAR AL SERVIDOR */
+        this.comunicacionService.postCompra(compra).subscribe(compraAgregado => {
+          console.log("---COMPRA AGREGADA---");
+          console.log(compraAgregado);
+        });
+      }
     });
   }
 
