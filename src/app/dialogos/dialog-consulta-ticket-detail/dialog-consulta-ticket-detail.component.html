@@ -1,0 +1,13 @@
+<table >
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Value</th>
+    </tr>
+    <tr *ngFor="let detail of masterData">
+        <td>{{ detail.material.idMaterial }}</td>
+        <td>{{ detail.material.nombreMaterial }}</td>
+        <td>{{ detail.cantidadItemCompra }}</td>
+    </tr>
+  </table>
+  

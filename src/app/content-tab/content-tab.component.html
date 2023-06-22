@@ -1,189 +1,159 @@
 <!--mat-grid-list cols="3" rowHeight="1000px">
     <mat-grid-tile>
       <div class="cliente-card-full"-->
-        <div class="cliente-card">
-          <div class="datos-cliente">
-            <button class="agregar-material boton-derecha" 
-                                mat-mini-fab color="accent" 
-                                aria-label="Agregar nuevo material" 
-                                (click)="agregarCliente()">
-                           <mat-icon>person_add</mat-icon>
-                        </button>
-            <p class="title-card">
-                Cliente
-            </p>
-            <p class="subtitle-cliente">
-                Ingrese los datos del cliente
-            </p>
-            <form class="example-form">
-              <mat-form-field class="input-clientes" appearance="fill">
-                <mat-label>Cliente</mat-label>
-                <input type="text"
-                       placeholder="Ingrese DNI o nombre de Cliente"
-                       aria-label="Cliente"
-                       matInput
-                       [formControl]="clienteNombreFormControl"
-                       [matAutocomplete]="autoCliente">
-                <mat-autocomplete #autoCliente="matAutocomplete">
-                  <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente" 
-                    [value]="option.idCliente + ' - ' + option.nombreCliente + ' ' + option.apellidoCliente">
-                    {{option.idCliente + " - " + option.nombreCliente + " " + option.apellidoCliente}}
-                  </mat-option>
-                  <!--mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
+<div class="cliente-card">
+  <div class="datos-cliente">
+    <button class="agregar-material boton-derecha" mat-mini-fab color="accent" aria-label="Agregar nuevo material"
+      (click)="agregarCliente()">
+      <mat-icon>person_add</mat-icon>
+    </button>
+    <p class="title-card">
+      Cliente
+    </p>
+    <p class="subtitle-cliente">
+      Ingrese los datos del cliente
+    </p>
+    <form class="example-form">
+      <mat-form-field class="input-clientes" appearance="fill">
+        <mat-label>Cliente</mat-label>
+        <input type="text" placeholder="Ingrese DNI o nombre de Cliente" aria-label="Cliente" matInput
+          [formControl]="clienteNombreFormControl" [matAutocomplete]="autoCliente">
+        <mat-autocomplete #autoCliente="matAutocomplete">
+          <mat-option *ngFor="let option of clientes | filterCliente:ingresaCliente"
+            [value]="option.idCliente + ' - ' + option.nombreCliente + ' ' + option.apellidoCliente">
+            {{option.idCliente + " - " + option.nombreCliente + " " + option.apellidoCliente}}
+          </mat-option>
+          <!--mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
                     {{option}}
                   </mat-option-->
-                </mat-autocomplete>
-              </mat-form-field>
-              <mat-form-field class="input-clientes" appearance="fill">
-                <mat-label>Número de documento</mat-label>
-                <input type="text"
-                       placeholder="Número de documento"
-                       aria-label="Ciudad"
-                       matInput
-                       [formControl]="clienteDNIFormControl">
-                       <!--[matAutocomplete]="autoCiudad"-->
-                <!--mat-autocomplete #autoCiudad="matAutocomplete">
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="input-clientes" appearance="fill">
+        <mat-label>Número de documento</mat-label>
+        <input type="text" placeholder="Número de documento" aria-label="Ciudad" matInput
+          [formControl]="clienteDNIFormControl">
+        <!--[matAutocomplete]="autoCiudad"-->
+        <!--mat-autocomplete #autoCiudad="matAutocomplete">
                   <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
                     {{option}}
                   </mat-option>
                 </mat-autocomplete-->
-              </mat-form-field>
-              <mat-form-field class="input-clientes" appearance="fill">
-                <mat-label>Número de teléfono</mat-label>
-                <input type="text"
-                       placeholder="Teléfono"
-                       aria-label="Ciudad"
-                       matInput
-                       [formControl]="clienteTelefonoFormControl">
-                       <!--[matAutocomplete]="autoCiudad"-->
-                <!--mat-autocomplete #autoCiudad="matAutocomplete">
+      </mat-form-field>
+      <mat-form-field class="input-clientes" appearance="fill">
+        <mat-label>Número de teléfono</mat-label>
+        <input type="text" placeholder="Teléfono" aria-label="Ciudad" matInput
+          [formControl]="clienteTelefonoFormControl">
+        <!--[matAutocomplete]="autoCiudad"-->
+        <!--mat-autocomplete #autoCiudad="matAutocomplete">
                   <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
                     {{option}}
                   </mat-option>
                 </mat-autocomplete-->
-              </mat-form-field>
-              <!--mat-form-field class="input-clientes">
+      </mat-form-field>
+      <!--mat-form-field class="input-clientes">
                 <mat-label>Observaciones</mat-label>
                 <textarea matInput 
                           [formControl]="clienteObservacionesFormControl"
                           placeholder="Indique si existe alguna observación a tener en cuenta...">
                 </textarea>
               </mat-form-field-->
-                <!--button mat-raised-button color="primary">Siguiente</button-->
-              </form>
-          </div>
-          <div>
-            <p style="font-size: 30pt; color: white;">relleno</p>
+      <!--button mat-raised-button color="primary">Siguiente</button-->
+    </form>
+  </div>
+  <div>
+    <p style="font-size: 30pt; color: white;">relleno</p>
 
-          </div>
-              <div [className]="classPie" (click)="clienteSiguiente()">
-                <p>SIGUIENTE 
-                  <span class="material-symbols-outlined" style="font-size: 16px;">
-                    arrow_forward
-                  </span>
-                </p>
-              </div>
-        </div>
-      <!--/div>  
+  </div>
+  <div [className]="classPie" (click)="clienteSiguiente()">
+    <p>SIGUIENTE
+      <span class="material-symbols-outlined" style="font-size: 16px;">
+        arrow_forward
+      </span>
+    </p>
+  </div>
+</div>
+<!--/div>  
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
       <div class="cliente-card-full"-->
-        <div class="material-card">
-          <p class="title-card">
-              Materiales
-          </p>
-          <p class="subtitle-cliente">
-            Ingrese los datos de los materiales
-          </p>
-                  <form class="example-form">
-                      <mat-form-field class="input-materiales" appearance="fill">
-                        <mat-label>Material</mat-label>
-                        <input type="text"
-                              placeholder="Ingrese código o nombre de Material"
-                              aria-label="Material"
-                              matInput
-                              [formControl]="materialesFormControl"
-                              [matAutocomplete]="autoMaterial"
-                              required>
-                        <mat-autocomplete #autoMaterial="matAutocomplete">
-                          <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial" [value]="option.idMaterial + ' - ' + option.nombreMaterial">
-                            {{option.idMaterial + ' - ' + option.nombreMaterial}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
+<div class="material-card">
+  <p class="title-card">
+    Materiales
+  </p>
+  <p class="subtitle-cliente">
+    Ingrese los datos de los materiales
+  </p>
+  <form class="example-form">
+    <mat-form-field class="input-materiales" appearance="fill">
+      <mat-label>Material</mat-label>
+      <input type="text" placeholder="Ingrese código o nombre de Material" aria-label="Material" matInput
+        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" required>
+      <mat-autocomplete #autoMaterial="matAutocomplete">
+        <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial"
+          [value]="option.idMaterial + ' - ' + option.nombreMaterial">
+          {{option.idMaterial + ' - ' + option.nombreMaterial}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-                      <mat-form-field class="input-materiales" appearance="fill" floatLabel="always">
-                          <mat-label>Peso</mat-label>
-                          <input matInput type="number" 
-                                class="example-right-align" 
-                                placeholder="0"
-                                [formControl]="pesoFormControl"
-                                required>
-                          <span matTextPrefix></span>
-                          <span matTextSuffix>kg</span>
-                        </mat-form-field>
+    <mat-form-field class="input-materiales" appearance="fill" floatLabel="always">
+      <mat-label>Peso</mat-label>
+      <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="pesoFormControl"
+        required>
+      <span matTextPrefix></span>
+      <span matTextSuffix>kg</span>
+    </mat-form-field>
 
-                        <button class="agregar-material boton-derecha" 
-                                [disabled]="isDisabledCliente"
-                                mat-fab color="accent" 
-                                aria-label="Agregar nuevo material" 
-                                (click)="agregarMaterial()">
-                           <mat-icon>add_box</mat-icon>
-                        </button>
-                      <!--button mat-raised-button color="primary">Agregar</button-->
-                    </form>
+    <button class="agregar-material boton-derecha" [disabled]="isDisabledCliente" mat-fab color="accent"
+      aria-label="Agregar nuevo material" (click)="agregarMaterial()">
+      <mat-icon>add_box</mat-icon>
+    </button>
+    <!--button mat-raised-button color="primary">Agregar</button-->
+  </form>
 
-                    <table class="tabla-materiales" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table class="tabla-materiales" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                      <!-- Checkbox Column -->
-                      <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef>
-                          <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                                        [checked]="selection.hasValue() && isAllSelected()"
-                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                        [aria-label]="checkboxLabel()">
-                          </mat-checkbox>
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                          <mat-checkbox (click)="$event.stopPropagation()"
-                                        (change)="$event ? selection.toggle(row) : null"
-                                        [checked]="selection.isSelected(row)"
-                                        [aria-label]="checkboxLabel(row)">
-                          </mat-checkbox>
-                        </td>
-                      </ng-container>
-                    
-                      <!-- Name Column -->
-                      <ng-container matColumnDef="Material">
-                        <th mat-header-cell *matHeaderCellDef> Material </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                      </ng-container>
-                    
-                      <!-- Weight Column -->
-                      <ng-container matColumnDef="Peso">
-                        <th mat-header-cell *matHeaderCellDef> Peso </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}}kg </td>
-                      </ng-container>
-                    
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                          (click)="selection.toggle(row)">
-                      </tr>
-                    </table>         
-                    
-                    <button mat-raised-button color="warn" [disabled]="isDisabled" (click)="eliminarMaterial()">
-                      Eliminar
-                    </button>
-                    
-                    <button class="finalizar-ticket boton-derecha" 
-                            [disabled]="isDisabledCliente"
-                            mat-raised-button color="primary"
-                            (click)="generarTicket()">
-                      Finalizar ticket {{miTicket}}
-                    </button>         
-                                      
-        </div>
-      <!--/div>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Material">
+      <th mat-header-cell *matHeaderCellDef> Material </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Peso">
+      <th mat-header-cell *matHeaderCellDef> Peso </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}}kg </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+
+  <button mat-raised-button color="warn" [disabled]="isDisabled" (click)="eliminarMaterial()">
+    Eliminar
+  </button>
+
+  <button class="finalizar-ticket boton-derecha" [disabled]="isDisabledCliente" mat-raised-button color="primary"
+    (click)="generarTicket()">
+    Finalizar ticket {{miTicket}}
+  </button>
+
+</div>
+<!--/div>
     </mat-grid-tile>
   </mat-grid-list-->
-  

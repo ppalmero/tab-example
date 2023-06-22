@@ -13,6 +13,7 @@ import { Materiales } from '../model/materiales';
 import { EstadosCompras } from '../model/enums';
 import { Compras } from '../model/compras';
 import { Items } from '../model/items';
+import { DialogAgregarClienteComponent } from '../dialogos/dialog-agregar-cliente/dialog-agregar-cliente.component';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -225,7 +226,20 @@ export class ContentTabComponent {
     });
   }
 
-  agregarCliente(){
-    
+  agregarCliente() {
+
+    const dialogRefAgregar = this.dialog.open(DialogAgregarClienteComponent);
+
+    dialogRefAgregar.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        const cliente: Clientes = result;
+        console.log(cliente);
+        this.comunicacionService.postCliente(cliente).subscribe(clienteAgregado => {
+          this.clientes.push(clienteAgregado);
+          //this.dataSource.data = this.clientes
+        });
+      }
+    });
   }
 }

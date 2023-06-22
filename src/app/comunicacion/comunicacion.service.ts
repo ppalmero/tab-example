@@ -4,6 +4,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { Materiales } from '../model/materiales';
 import { Clientes } from '../model/clientes';
 import { Compras } from '../model/compras';
+import { TicketCompra } from '../model/ticket-compra';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,17 @@ export class ComunicacionService {
     return this.http.get<Materiales[]>(this.apiServer + 'material');
   }
 
+  getListaTickets(): Observable<Compras[]> {
+    // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
+    return this.http.get<Compras[]>(this.apiServer + 'compra');
+  }
+
+  getListaMaterialesDeUnTickets(idTicket:number): Observable<TicketCompra[]> {
+    // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
+    return this.http.get<TicketCompra[]>(this.apiServer + 'item/compra/' + idTicket);
+  }
+
+  //Está realizada de manera diferente al post de cliente por no conocer bien el json de retorno, lo que deja sin funcionamiento a la función
   postCompra(compra: Compras): Observable<Object> {
     console.log("comienza envío material");
     /*return this.http.post<Compras>(this.postURLCompra + 'compra/compra', compra).pipe(
@@ -47,7 +59,14 @@ export class ComunicacionService {
         console.error(error);
       }
     );*/
-    
+  }
+
+  postCliente(cliente: Clientes) {
+    console.log("comienza envío cliente");
+    return this.http.post<Clientes>(this.apiServer + 'cliente', cliente).pipe(
+      tap((newHero: Clientes) => console.log(`added hero w/ id=${newHero.idCliente}`)),
+      catchError(this.handleError<Clientes>('addHero'))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
