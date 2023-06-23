@@ -1,8 +1,10 @@
-<table>
+<h1 mat-dialog-title>Consultar ticket</h1>
+<div mat-dialog-content>
+  <table>
     <tr *ngFor="let master of masterData" (click)="onSelect(master)">
       <td>{{ master.idCompra }}</td>
       <td>{{ master.precioTotalCompra }}</td>
     </tr>
   </table>
   <app-dialog-consulta-ticket-detail *ngIf="selectedMaster"></app-dialog-consulta-ticket-detail>
-  
+</div>
