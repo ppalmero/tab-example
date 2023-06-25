@@ -34,7 +34,7 @@ export class ComunicacionService {
 
   getListaTickets(): Observable<Compras[]> {
     // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
-    return this.http.get<Compras[]>("http://localhost:8080/compra");//this.apiServer + 'compra');
+    return this.http.get<Compras[]>("http://45.90.220.197:8080/compra");//this.apiServer + 'compra');
   }
 
   getListaMaterialesDeUnTickets(idTicket:number): Observable<TicketCompra[]> {
