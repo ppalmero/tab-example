@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
@@ -29,6 +29,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./content-tab.component.css']
 })
 export class ContentTabComponent {
+
+  @Output() miEvento = new EventEmitter<string>();
+
   ELEMENT_DATA: Material[] = [];
   @Input() ticket : number;
   miTicket : number = -1;
@@ -180,6 +183,7 @@ export class ContentTabComponent {
     console.log(this.clienteNombreFormControl.value!);
     if (this.optionsCliente.map((elemento) => elemento.idCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente)
                                               .includes(this.clienteNombreFormControl.value!)){
+      this.miEvento.emit(this.ticket + "#" + this.clienteNombreFormControl.value!);
       this.classPie = "pie-cliente pie-cliente-clicked";
       this.materialesFormControl.enable({onlySelf:true});
       this.pesoFormControl.enable({onlySelf:true});
@@ -242,4 +246,5 @@ export class ContentTabComponent {
       }
     });
   }
+
 }

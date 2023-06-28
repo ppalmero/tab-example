@@ -30,7 +30,7 @@
 
 <img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0" />
 
-<mat-tab-group class="tab-group" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
+<mat-tab-group #tabGroup class="tab-group" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
   backgroundColor=primary>
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
     <!--
@@ -47,6 +47,6 @@
     <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
       <mat-icon>close</mat-icon>
     </button>
-    <app-content-tab [ticket]="nroTicket - 1"></app-content-tab>
+    <app-content-tab [ticket]="nroTicket - 1" (miEvento)="capturarCliente($event)"></app-content-tab>
   </mat-tab>
 </mat-tab-group>

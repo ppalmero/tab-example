@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket/dialog-consulta-ticket.component';
+import { MatTabGroup } from '@angular/material/tabs';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -12,16 +13,19 @@ import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket
   styleUrls: ['tab-group-dynamic-example.css'],
 })
 export class TabGroupDynamicExample {
+  @ViewChild('tabGroup') tabGroup: MatTabGroup;
+
   tabs:string[] = [];
   selected = new FormControl(0);
-  nroTicket: number = 1;
+  nroTicket: number = 0;
+  clienteLabel: String = "";
 
   constructor(public dialog: MatDialog) {}
 
   addTab(selectAfterAdding: boolean) { 
     //consultar número de ticket siguiente
-    this.nroTicket;
-    this.tabs.push('Ticket N°' + this.nroTicket++);
+    this.tabs.push('Ticket de: ');
+    this.nroTicket++;
 
     //if (selectAfterAdding) {
       this.selected.setValue(this.tabs.length - 1);
@@ -38,6 +42,14 @@ export class TabGroupDynamicExample {
     dialogRefConsultar.afterClosed().subscribe(result => {
       console.log(result);
     });
+  }
+
+  capturarCliente(cliente: string) {
+    console.log("CLIENTE TAB: " + cliente);
+    const tabCliente = cliente.split("#");
+    //this.tabs[parseInt(tabCliente[0])] = tabCliente[1];
+    let pestana = this.tabGroup._getTabLabelId(parseInt(tabCliente[0]));
+    pestana = 'Nuevo Label';
   }
 }
 
