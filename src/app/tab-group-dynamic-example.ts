@@ -47,9 +47,13 @@ export class TabGroupDynamicExample {
   capturarCliente(cliente: string) {
     console.log("CLIENTE TAB: " + cliente);
     const tabCliente = cliente.split("#");
-    //this.tabs[parseInt(tabCliente[0])] = tabCliente[1];
     let pestana = this.tabGroup._getTabLabelId(parseInt(tabCliente[0]));
-    pestana = 'Nuevo Label';
+    console.log("TITULO TAB");
+    console.log(pestana);
+
+    const elemento = document.getElementById(pestana);
+    console.log(elemento?.children[2].firstChild);
+    elemento!.children[2].firstChild!.textContent="Ticket de: " + tabCliente[1];
   }
 }
 
