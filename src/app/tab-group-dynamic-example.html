@@ -1,10 +1,5 @@
 <img class="logo" src="../../assets/images/logo-chico.png" />
 
-<!--mat-form-field appearance="fill">
-  <mat-label>Selected tab index</mat-label>
-  <input matInput type="number" [formControl]="selected">
-</mat-form-field-->
-
 <div class="boton-nuevo-ticket">
   <button mat-raised-button color="accent" class="example-add-tab-button" (click)="addTab(true)">
     <span class="material-symbols-outlined" style="font-size: 16px;">
@@ -25,7 +20,6 @@
     </button>
   </mat-menu>
 
-  <!--mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox-->
 </div>
 
 <img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0" />
@@ -33,16 +27,6 @@
 <mat-tab-group #tabGroup class="tab-group" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
   backgroundColor=primary>
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
-    <!--
-      Contents for {{tab}} tab
-
-    <button mat-raised-button
-            class="example-delete-tab-button"
-            [disabled]="tabs.length === 1"
-            (click)="removeTab(index)">
-      Finalizar
-    </button>
-  -->
 
     <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
       <mat-icon>close</mat-icon>

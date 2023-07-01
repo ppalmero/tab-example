@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Clientes } from 'src/app/model/clientes';
 
 @Component({
@@ -12,7 +12,6 @@ export class DialogAgregarClienteComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarClienteComponent>,
-    //@Inject(MAT_DIALOG_DATA) public data: Ticket,
   ) {}
 
   onNoClick(): void {

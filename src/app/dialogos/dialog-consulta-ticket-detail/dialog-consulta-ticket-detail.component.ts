@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComunicacionService } from 'src/app/comunicacion/comunicacion.service';
 import { TicketCompra } from 'src/app/model/ticket-compra';
 
@@ -10,8 +10,6 @@ import { TicketCompra } from 'src/app/model/ticket-compra';
 export class DialogConsultaTicketDetailComponent {
   masterData: TicketCompra[]=[];
   displayedColumns: string[] = ['position', 'name', 'weight'];
-  //dataSource = this.masterData;
-  //@Input() detailData: Items[] = []; // Arreglo para almacenar los datos de detalle
 
   constructor(private dataService: ComunicacionService) { }
 

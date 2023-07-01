@@ -1,7 +1,5 @@
-import { Component, inject, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
-import { ParametrosMensajes } from 'src/app/model/parametros-mensajes';
 
 @Component({
   selector: 'app-mensajes',

@@ -1,6 +1,3 @@
-<!--mat-grid-list cols="3" rowHeight="1000px">
-    <mat-grid-tile>
-      <div class="cliente-card-full"-->
 <div class="cliente-card">
   <div class="datos-cliente">
     <button class="agregar-material boton-derecha" mat-mini-fab color="accent" aria-label="Agregar nuevo material"
@@ -23,41 +20,18 @@
             [value]="option.idCliente + ' - ' + option.nombreCliente + ' ' + option.apellidoCliente">
             {{option.idCliente + " - " + option.nombreCliente + " " + option.apellidoCliente}}
           </mat-option>
-          <!--mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
-                    {{option}}
-                  </mat-option-->
         </mat-autocomplete>
       </mat-form-field>
       <mat-form-field class="input-clientes" appearance="fill">
         <mat-label>Número de documento</mat-label>
         <input type="text" placeholder="Número de documento" aria-label="Ciudad" matInput
           [formControl]="clienteDNIFormControl">
-        <!--[matAutocomplete]="autoCiudad"-->
-        <!--mat-autocomplete #autoCiudad="matAutocomplete">
-                  <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete-->
       </mat-form-field>
       <mat-form-field class="input-clientes" appearance="fill">
         <mat-label>Número de teléfono</mat-label>
         <input type="text" placeholder="Teléfono" aria-label="Ciudad" matInput
           [formControl]="clienteTelefonoFormControl">
-        <!--[matAutocomplete]="autoCiudad"-->
-        <!--mat-autocomplete #autoCiudad="matAutocomplete">
-                  <mat-option *ngFor="let option of filteredOptionsCiudad | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete-->
       </mat-form-field>
-      <!--mat-form-field class="input-clientes">
-                <mat-label>Observaciones</mat-label>
-                <textarea matInput 
-                          [formControl]="clienteObservacionesFormControl"
-                          placeholder="Indique si existe alguna observación a tener en cuenta...">
-                </textarea>
-              </mat-form-field-->
-      <!--button mat-raised-button color="primary">Siguiente</button-->
     </form>
   </div>
   <div>
@@ -72,10 +46,6 @@
     </p>
   </div>
 </div>
-<!--/div>  
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2">
-      <div class="cliente-card-full"-->
 <div class="material-card">
   <p class="title-card">
     Materiales

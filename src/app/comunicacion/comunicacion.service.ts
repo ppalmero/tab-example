@@ -11,8 +11,7 @@ import { TicketCompra } from '../model/ticket-compra';
 })
 export class ComunicacionService {
 
-  private apiServer = 'http://45.90.220.197:8080/';//'back/';
-  //private postURLCompra = 'back/';
+  private apiServer = 'http://45.90.220.197:8080/';//'back/';//
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,20 +42,7 @@ export class ComunicacionService {
   //Está realizada de manera diferente al post de cliente por no conocer bien el json de retorno, lo que deja sin funcionamiento a la función
   postCompra(compra: Compras): Observable<Object> {
     console.log("comienza envío material");
-    /*return this.http.post<Compras>(this.postURLCompra + 'compra/compra', compra).pipe(
-      tap((compraNueva: Compras) => console.log(`added compra w/ id=${compraNueva.idCompra}`)),
-      catchError(this.handleError<Compras>('addCompra'))
-    );*/
-    return this.http.post(this.apiServer + 'compra/compra', compra);/*.subscribe(
-      (response) => {
-        // Maneja la respuesta del servidor
-        console.log(response);
-      },
-      (error) => {
-        // Maneja el error
-        console.error(error);
-      }
-    );*/
+    return this.http.post(this.apiServer + 'compra/compra', compra);
   }
 
   postCliente(cliente: Clientes) {

@@ -16,7 +16,6 @@ import { Items } from '../model/items';
 import { DialogAgregarClienteComponent } from '../dialogos/dialog-agregar-cliente/dialog-agregar-cliente.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MensajesComponent } from '../dialogos/mensajes/mensajes.component';
-import { timer } from 'rxjs';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -48,8 +47,6 @@ export class ContentTabComponent {
 
   optionsCliente: Clientes[] = [];
   optionsMaterial: Materiales[] = [];
-  //filteredOptionsCliente: Observable<string[]>;
-  //filteredOptionsMaterial: Observable<string[]>;
   displayedColumns: string[] = ['select', 'Material', 'Peso'];
   dataSource = new MatTableDataSource<Material>(this.ELEMENT_DATA);
   selection = new SelectionModel<Material>(true, []);
