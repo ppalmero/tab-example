@@ -47,6 +47,6 @@
     <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
       <mat-icon>close</mat-icon>
     </button>
-    <app-content-tab [ticket]="nroTicket - 1" (miEvento)="capturarCliente($event)"></app-content-tab>
+    <app-content-tab [ticket]="index" (miEvento)="capturarCliente($event)" (eventoCerrar)="removeTab($event)"></app-content-tab>
   </mat-tab>
 </mat-tab-group>

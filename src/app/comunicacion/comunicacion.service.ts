@@ -11,10 +11,8 @@ import { TicketCompra } from '../model/ticket-compra';
 })
 export class ComunicacionService {
 
-  private apiUrlClientes = 'https://my.api.mockaroo.com/clientes.json?key=1d95ea90';
-  private apiUrlListaMateriales = 'https://my.api.mockaroo.com/materiales.json?key=1d95ea90';
-  private apiServer = 'back/';
-  private postURLCompra = 'back/';
+  private apiServer = 'http://45.90.220.197:8080/';//'back/';
+  //private postURLCompra = 'back/';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -49,7 +47,7 @@ export class ComunicacionService {
       tap((compraNueva: Compras) => console.log(`added compra w/ id=${compraNueva.idCompra}`)),
       catchError(this.handleError<Compras>('addCompra'))
     );*/
-    return this.http.post(this.postURLCompra + 'compra/compra', compra);/*.subscribe(
+    return this.http.post(this.apiServer + 'compra/compra', compra);/*.subscribe(
       (response) => {
         // Maneja la respuesta del servidor
         console.log(response);
@@ -74,7 +72,8 @@ export class ComunicacionService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error("un error" + error); // log to console instead
+      console.error("un error");
+      console.log(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);

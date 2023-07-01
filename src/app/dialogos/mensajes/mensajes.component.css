@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+  }
+
+  .mensaje {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .mensaje-ok{
+    color: green;
+  }
+
+  .mensaje-nook{
+    color: red;
+  }

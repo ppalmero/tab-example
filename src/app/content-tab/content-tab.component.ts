@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogGenenarTicketComponent } from '../dialog-genenar-ticket/dialog-genenar-ticket.component';
@@ -14,6 +14,9 @@ import { EstadosCompras } from '../model/enums';
 import { Compras } from '../model/compras';
 import { Items } from '../model/items';
 import { DialogAgregarClienteComponent } from '../dialogos/dialog-agregar-cliente/dialog-agregar-cliente.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MensajesComponent } from '../dialogos/mensajes/mensajes.component';
+import { timer } from 'rxjs';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,16 +34,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class ContentTabComponent {
 
   @Output() miEvento = new EventEmitter<string>();
+  @Output() eventoCerrar = new EventEmitter<number>();
 
   ELEMENT_DATA: Material[] = [];
-  @Input() ticket : number;
-  miTicket : number = -1;
+  @Input() ticket: number;
+  miTicket: number = -1;
   clienteNombreFormControl = new FormControl('', [Validators.required]);
-  clienteDNIFormControl = new FormControl({value:'', disabled: true});
-  clienteTelefonoFormControl = new FormControl({value:'', disabled: true});
+  clienteDNIFormControl = new FormControl({ value: '', disabled: true });
+  clienteTelefonoFormControl = new FormControl({ value: '', disabled: true });
   //clienteObservacionesFormControl = new FormControl('');
-  materialesFormControl = new FormControl({value:'', disabled: true});
-  pesoFormControl = new FormControl({value:'', disabled: true});
+  materialesFormControl = new FormControl({ value: '', disabled: true });
+  pesoFormControl = new FormControl({ value: '', disabled: true });
 
   optionsCliente: Clientes[] = [];
   optionsMaterial: Materiales[] = [];
@@ -52,10 +56,10 @@ export class ContentTabComponent {
 
   @ViewChild(MatTable) table: MatTable<Material>;
 
-  isDisabledCliente : boolean = true;
-  isDisabled : boolean = true;
+  isDisabledCliente: boolean = true;
+  isDisabled: boolean = true;
 
-  classPie:String = "pie-cliente";
+  classPie: String = "pie-cliente";
 
   matcher = new MyErrorStateMatcher();
 
@@ -66,10 +70,11 @@ export class ContentTabComponent {
   ingresaCliente: string = "";
   ingresaMaterial: string = "";
   clienteElegido: Clientes;
-  listaItems: Items[]=[];
+  listaItems: Items[] = [];
 
-  constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService) {}
-  
+  constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService,
+    private _snackBar: MatSnackBar) { }
+
   ngOnInit() {
     this.miTicket = this.ticket;
 
@@ -81,9 +86,9 @@ export class ContentTabComponent {
 
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
-      const clientesFiltro:Clientes[] = this.optionsCliente.filter(
+      const clientesFiltro: Clientes[] = this.optionsCliente.filter(
         (elemento) => (elemento.idCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente).includes(valor!));
-      if (clientesFiltro.length > 0){
+      if (clientesFiltro.length > 0) {
         this.clienteElegido = clientesFiltro[0];
         this.clienteDNIFormControl.setValue(clientesFiltro[0].dniCliente.toString());
         this.clienteTelefonoFormControl.setValue(clientesFiltro[0].telefonoCliente);
@@ -99,7 +104,7 @@ export class ContentTabComponent {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    if (numSelected > 0){
+    if (numSelected > 0) {
       this.isDisabled = false;
     } else {
       this.isDisabled = true;
@@ -120,16 +125,16 @@ export class ContentTabComponent {
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: Material): string {
-    var s : String;
+    var s: String;
     if (!row) {
-      if (this.isAllSelected()){
+      if (this.isAllSelected()) {
         s = "deselect";
       } else {
         s = "select";
       }
       return `${s} all`;
     } else {
-      if (this.selection.isSelected(row)){
+      if (this.selection.isSelected(row)) {
         s = 'deselect';
       } else {
         s = 'select';
@@ -138,25 +143,27 @@ export class ContentTabComponent {
     }
   }
 
-  agregarMaterial(){
-    if (!this.materialesFormControl.value){
+  agregarMaterial() {
+    if (!this.materialesFormControl.value) {
       alert("Ingrese material");
       return;
     }
-    if (!this.pesoFormControl.value){
+    if (!this.pesoFormControl.value) {
       alert("Ingrese peso");
       return;
     }
-    const nombreCodigoMaterial: string[] = this.materialesFormControl.value!.split(" - "); 
+    const nombreCodigoMaterial: string[] = this.materialesFormControl.value!.split(" - ");
     const materialSumaPeso = this.dataSource.data.find(obj => obj.codigo === Number.parseInt(nombreCodigoMaterial[0]));
     if (materialSumaPeso) {
       console.log("material " + nombreCodigoMaterial[1] + " encontrado");
       materialSumaPeso.weight += Number.parseFloat(this.pesoFormControl.value!);
     } else {
-      this.dataSource.data.push({position: this.dataSource.data.length, 
-                                codigo: Number.parseInt(nombreCodigoMaterial[0]),
-                                name: nombreCodigoMaterial[1], 
-                                weight: Number.parseFloat(this.pesoFormControl.value!)});
+      this.dataSource.data.push({
+        position: this.dataSource.data.length,
+        codigo: Number.parseInt(nombreCodigoMaterial[0]),
+        name: nombreCodigoMaterial[1],
+        weight: Number.parseFloat(this.pesoFormControl.value!)
+      });
     }
     this.table.renderRows();
     //console.log(this.dataSource.data);
@@ -164,30 +171,30 @@ export class ContentTabComponent {
     this.pesoFormControl.setValue("");
   }
 
-  eliminarMaterial(){
-    for (let i = 0; i < this.selection.selected.length; i++){
-      let j = this.dataSource.data.indexOf (this.selection.selected[i]);
+  eliminarMaterial() {
+    for (let i = 0; i < this.selection.selected.length; i++) {
+      let j = this.dataSource.data.indexOf(this.selection.selected[i]);
       this.dataSource.data.splice(j, 1);
       console.log(this.selection.selected);
     }
-    this.dataSource._updateChangeSubscription(); 
+    this.dataSource._updateChangeSubscription();
     this.table.renderRows();
     this.selection.clear();
     this.isDisabled = true;
   }
 
-  clienteSiguiente(){
-    if (!this.isDisabledCliente){
+  clienteSiguiente() {
+    if (!this.isDisabledCliente) {
       return;
     }
     console.log(this.clienteNombreFormControl.value!);
     if (this.optionsCliente.map((elemento) => elemento.idCliente + " - " + elemento.nombreCliente + " " + elemento.apellidoCliente)
-                                              .includes(this.clienteNombreFormControl.value!)){
+      .includes(this.clienteNombreFormControl.value!)) {
       this.miEvento.emit(this.ticket + "#" + this.clienteNombreFormControl.value!);
       this.classPie = "pie-cliente pie-cliente-clicked";
-      this.materialesFormControl.enable({onlySelf:true});
-      this.pesoFormControl.enable({onlySelf:true});
-      this.clienteNombreFormControl.disable({onlySelf:true});
+      this.materialesFormControl.enable({ onlySelf: true });
+      this.pesoFormControl.enable({ onlySelf: true });
+      this.clienteNombreFormControl.disable({ onlySelf: true });
       this.isDisabledCliente = false;
       this.comunicacionService.getListaMateriales().subscribe(data => {
         this.materiales = data;
@@ -199,12 +206,12 @@ export class ContentTabComponent {
     }
   }
 
-  generarTicket(){
+  generarTicket() {
     let ticket = new Ticket(this.ticket,
-                            this.clienteNombreFormControl.value!, 
-                            this.clienteDNIFormControl.value!,
-                            this.clienteTelefonoFormControl.value!,
-                            this.dataSource.data);
+      this.clienteNombreFormControl.value!,
+      this.clienteDNIFormControl.value!,
+      this.clienteTelefonoFormControl.value!,
+      this.dataSource.data);
     console.log(ticket);
     const dialogRef = this.dialog.open(DialogGenenarTicketComponent, {
       data: ticket,
@@ -212,20 +219,29 @@ export class ContentTabComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("---DATASOURCE---");
-        console.log(this.dataSource.data);
+      console.log(this.dataSource.data);
 
       if (result == EstadosCompras.NOPAGADA) {
-        for (let i = 0; i < this.dataSource.data.length; i++){
-          this.listaItems.push({cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioEspecialItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].codigo)!});
+        for (let i = 0; i < this.dataSource.data.length; i++) {
+          this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioEspecialItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].codigo)! });
         }
-        let compra: Compras={idCompra: -1, precioTotalCompra:-1,estado:EstadosCompras.NOPAGADA,cliente:this.clienteElegido,items:this.listaItems};
+        let compra: Compras = { idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0, cliente: this.clienteElegido, items: this.listaItems };
         console.log("---COMPRA---");
         console.log(compra);
-        /*** ENVIAR AL SERVIDOR */
-        this.comunicacionService.postCompra(compra).subscribe(compraAgregado => {
+        /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
+        this.comunicacionService.postCompra(compra).subscribe({next: (compraAgregado) => {
           console.log("---COMPRA AGREGADA---");
           console.log(compraAgregado);
-        });
+          this._snackBar.openFromComponent(MensajesComponent, {
+            duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
+          });
+          this.eventoCerrar.emit(this.ticket);
+        }, error: (err) => {
+          this._snackBar.openFromComponent(MensajesComponent, {
+            duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
+          });
+          console.log(err);
+        }});
       }
     });
   }

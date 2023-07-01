@@ -8,8 +8,9 @@ import { TicketCompra } from 'src/app/model/ticket-compra';
   styleUrls: ['./dialog-consulta-ticket-detail.component.css']
 })
 export class DialogConsultaTicketDetailComponent {
-  masterData: TicketCompra[];
-
+  masterData: TicketCompra[]=[];
+  displayedColumns: string[] = ['position', 'name', 'weight'];
+  //dataSource = this.masterData;
   //@Input() detailData: Items[] = []; // Arreglo para almacenar los datos de detalle
 
   constructor(private dataService: ComunicacionService) { }

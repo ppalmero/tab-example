@@ -1,0 +1,27 @@
+.table-lista-tickets {
+    width: 50%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 12px;
+    width: 100%;
+}
+
+td,
+th {
+    width: 25%;
+    height: 20px;
+}
+
+.mat-mdc-dialog-content {
+    max-height: 500px;
+}
+
+.grid-materiales {
+    top: 0;
+    position: absolute;
+}

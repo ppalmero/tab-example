@@ -37,7 +37,10 @@ export class TabGroupDynamicExample {
   }
 
   consultarTicket(){
-    const dialogRefConsultar = this.dialog.open(DialogConsultaTicketComponent);
+    const dialogRefConsultar = this.dialog.open(DialogConsultaTicketComponent, {
+      height: '90%',
+      width: '70%',
+    });
 
     dialogRefConsultar.afterClosed().subscribe(result => {
       console.log(result);

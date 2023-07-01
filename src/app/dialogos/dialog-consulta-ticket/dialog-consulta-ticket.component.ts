@@ -3,6 +3,8 @@ import { ComunicacionService } from 'src/app/comunicacion/comunicacion.service';
 import { Compras } from 'src/app/model/compras';
 import { DialogConsultaTicketDetailComponent } from '../dialog-consulta-ticket-detail/dialog-consulta-ticket-detail.component';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dialog-consulta-ticket',
@@ -17,20 +19,34 @@ export class DialogConsultaTicketComponent implements OnInit{
   selectedMaster: Compras; // Arreglo para almacenar los datos maestros seleccionados
   // Objeto para almacenar el maestro seleccionado
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<Compras>(this.masterData);
+  displayedColumns: string[] = ['id', 'progress', 'name', 'fruit'];
+  dataSource: MatTableDataSource<Compras>;
 
-  constructor(private dataService: ComunicacionService) { }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit() {
+  constructor(private dataService: ComunicacionService) { 
+    
+    this.dataSource = new MatTableDataSource<Compras>(this.masterData);
     this.dataService.getListaTickets().subscribe(
       (tickets) => {
         // Maneja la respuesta del servidor
         this.masterData = tickets;
         this.dataSource.data.push(...this.masterData);
+        //this.dataSource = new MatTableDataSource<Compras>(this.masterData);
         this.table.renderRows();
+        this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
       }
     ); // Obtén los datos maestros del servicio
+  //this.dataSource = new MatTableDataSource<Compras>(this.masterData);
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    
   }
 
   onSelect(master: any) {
@@ -42,5 +58,9 @@ export class DialogConsultaTicketComponent implements OnInit{
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

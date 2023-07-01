@@ -97,7 +97,7 @@
     </mat-form-field>
 
     <mat-form-field class="input-materiales" appearance="fill" floatLabel="always">
-      <mat-label>Peso</mat-label>
+      <mat-label>Cantidad</mat-label>
       <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="pesoFormControl"
         required>
       <span matTextPrefix></span>
@@ -108,7 +108,6 @@
       aria-label="Agregar nuevo material" (click)="agregarMaterial()">
       <mat-icon>add_box</mat-icon>
     </button>
-    <!--button mat-raised-button color="primary">Agregar</button-->
   </form>
 
   <table class="tabla-materiales" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -150,10 +149,7 @@
 
   <button class="finalizar-ticket boton-derecha" [disabled]="isDisabledCliente" mat-raised-button color="primary"
     (click)="generarTicket()">
-    Finalizar ticket {{miTicket}}
+    Finalizar ticket
   </button>
 
 </div>
-<!--/div>
-    </mat-grid-tile>
-  </mat-grid-list-->

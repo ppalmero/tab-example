@@ -14,9 +14,10 @@ import { FilterMaterialPipe } from './content-tab/filtros/filter-material.pipe';
 import { DialogAgregarClienteComponent } from './dialogos/dialog-agregar-cliente/dialog-agregar-cliente.component';
 import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket/dialog-consulta-ticket.component';
 import { DialogConsultaTicketDetailComponent } from './dialogos/dialog-consulta-ticket-detail/dialog-consulta-ticket-detail.component';
+import { MensajesComponent } from './dialogos/mensajes/mensajes.component';
 
 @NgModule({
-  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent],
+  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent, MensajesComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
