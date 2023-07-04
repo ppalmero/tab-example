@@ -10,10 +10,12 @@ import { TicketCompra } from 'src/app/model/ticket-compra';
 export class DialogConsultaTicketDetailComponent {
   masterData: TicketCompra[]=[];
   displayedColumns: string[] = ['position', 'name', 'weight'];
+  idTicket: number = 0;
 
   constructor(private dataService: ComunicacionService) { }
 
   mostrarListaMateriales(idTicket: number){
+    this.idTicket = idTicket;
     this.dataService.getListaMaterialesDeUnTickets(idTicket).subscribe(
       (items) => {
         // Maneja la respuesta del servidor

@@ -16,6 +16,10 @@ th {
     width: 25%;
     height: 20px;
 }
+.mat-mdc-row:hover {
+    background-color: lightgray !important;
+    cursor: pointer;
+}
 
 .mat-mdc-dialog-content {
     max-height: 500px;
