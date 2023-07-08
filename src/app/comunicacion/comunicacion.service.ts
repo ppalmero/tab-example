@@ -11,7 +11,7 @@ import { TicketCompra } from '../model/ticket-compra';
 })
 export class ComunicacionService {
 
-  private apiServer = 'back/';//'http://45.90.220.197:8080/';//
+  private apiServer = 'http://45.90.220.197:8080/';//'back/';//
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
