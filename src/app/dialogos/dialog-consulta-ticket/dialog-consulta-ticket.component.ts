@@ -61,6 +61,7 @@ export class DialogConsultaTicketComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log("FILTRAR: " + filterValue);
     //this.dataSource.filter = filterValue.trim().toLowerCase();//NO FILTRA POR NOMBRE DE CLIENTE
 
     //this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -68,6 +69,8 @@ export class DialogConsultaTicketComponent implements OnInit {
       //return data.filter((item: any) => this.filtro.customFilter(item, filter)).length > 0;
       return false;
     };*/
+    this.dataSource.filter = filterValue.trim().toLowerCase();//NO FILTRA POR NOMBRE DE CLIENTE
+    this.dataSource.filterPredicate = this.filtro.customFilter;
 
     this.dataSource.filter = filterValue.trim().toLowerCase();//NO FILTRA POR NOMBRE DE CLIENTE
     this.dataSource.filterPredicate = this.filtro.customFilter;
@@ -79,5 +82,8 @@ export class DialogConsultaTicketComponent implements OnInit {
 
   getFecha(fecha: number){
     return this.formatoFecha.formatearFecha(new Date(fecha));
+  }
+
+  cerrarDialog(){
   }
 }

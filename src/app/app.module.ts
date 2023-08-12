@@ -15,9 +15,10 @@ import { DialogAgregarClienteComponent } from './dialogos/dialog-agregar-cliente
 import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket/dialog-consulta-ticket.component';
 import { DialogConsultaTicketDetailComponent } from './dialogos/dialog-consulta-ticket-detail/dialog-consulta-ticket-detail.component';
 import { MensajesComponent } from './dialogos/mensajes/mensajes.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent, MensajesComponent],
+  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent, MensajesComponent, LoginComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

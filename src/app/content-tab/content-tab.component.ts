@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, TemplateRef, ElementRef } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -16,6 +16,11 @@ import { Items } from '../model/items';
 import { DialogAgregarClienteComponent } from '../dialogos/dialog-agregar-cliente/dialog-agregar-cliente.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MensajesComponent } from '../dialogos/mensajes/mensajes.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es-AR';
+import { AutenticacionService } from '../comunicacion/autenticacion.service';
+import { Empleados } from '../model/empleados';
+registerLocaleData(localeEs, 'es');
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,6 +36,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./content-tab.component.css']
 })
 export class ContentTabComponent {
+
+  @ViewChild('spanSufijo') email: ElementRef<HTMLInputElement>;
 
   @Output() miEvento = new EventEmitter<string>();
   @Output() eventoCerrar = new EventEmitter<number>();
@@ -69,7 +76,9 @@ export class ContentTabComponent {
   clienteElegido: Clientes;
   listaItems: Items[] = [];
 
-  constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService,
+  checkPedido: boolean = false;
+
+  constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService, private authService: AutenticacionService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -94,6 +103,15 @@ export class ContentTabComponent {
 
     this.materialesFormControl.valueChanges.subscribe(valor => {
       this.ingresaMaterial = valor!;
+      console.log("--MATERIAL SELECCIONADO--");
+      console.log(valor);
+      if (valor) {
+        const materialesFiltro: Materiales[] = this.optionsMaterial.filter(
+          (elemento) => (elemento.idMaterial + " - " + elemento.nombreMaterial).includes(valor!));
+        if (materialesFiltro.length > 0) {
+          this.email.nativeElement.innerText = materialesFiltro[0].tipoMedidaMaterial;
+        }
+      }
     });
   }
 
@@ -142,24 +160,30 @@ export class ContentTabComponent {
 
   agregarMaterial() {
     if (!this.materialesFormControl.value) {
-      alert("Ingrese material");
+      this._snackBar.openFromComponent(MensajesComponent, {
+        duration: 5 * 1000, announcementMessage: "Ingrese material", data: { icono: "info", color: "mensaje-info" }
+      });
       return;
     }
     if (!this.pesoFormControl.value) {
-      alert("Ingrese peso");
+      this._snackBar.openFromComponent(MensajesComponent, {
+        duration: 5 * 1000, announcementMessage: "Ingrese cantidad", data: { icono: "info", color: "mensaje-info" }
+      });
       return;
     }
     const nombreCodigoMaterial: string[] = this.materialesFormControl.value!.split(" - ");
-    const materialSumaPeso = this.dataSource.data.find(obj => obj.codigo === Number.parseInt(nombreCodigoMaterial[0]));
+    const materialSumaPeso = this.dataSource.data.find(obj => obj.idMaterial === Number.parseInt(nombreCodigoMaterial[0]));
     if (materialSumaPeso) {
       console.log("material " + nombreCodigoMaterial[1] + " encontrado");
       materialSumaPeso.weight += Number.parseFloat(this.pesoFormControl.value!);
     } else {
       this.dataSource.data.push({
         position: this.dataSource.data.length,
-        codigo: Number.parseInt(nombreCodigoMaterial[0]),
-        name: nombreCodigoMaterial[1],
-        weight: Number.parseFloat(this.pesoFormControl.value!)
+        idMaterial: Number.parseInt(nombreCodigoMaterial[0]),
+        nombreMaterial: nombreCodigoMaterial[1],
+        weight: Number.parseFloat(this.pesoFormControl.value!),
+        tipoMedidaMaterial: this.email.nativeElement.innerText,
+        precioMaterial: -1
       });
     }
     this.table.renderRows();
@@ -199,48 +223,63 @@ export class ContentTabComponent {
         console.log(this.materiales);
       });
     } else {
-      alert("Debe elegir clientes de la lista desplegable.")
+      this._snackBar.openFromComponent(MensajesComponent, {
+        duration: 5 * 1000, announcementMessage: "Debe elegir clientes de la lista desplegable.", data: { icono: "info", color: "mensaje-info" }
+      });
     }
   }
 
   generarTicket() {
-    let ticket = new Ticket(this.ticket,
-      this.clienteNombreFormControl.value!,
-      this.clienteDNIFormControl.value!,
-      this.clienteTelefonoFormControl.value!,
-      this.dataSource.data);
-    console.log(ticket);
-    const dialogRef = this.dialog.open(DialogGenenarTicketComponent, {
-      data: ticket,
-    });
+    if (this.dataSource.data.length > 0) {
+      let ticket = new Ticket(this.ticket,
+        this.clienteNombreFormControl.value!,
+        this.clienteDNIFormControl.value!,
+        this.clienteTelefonoFormControl.value!,
+        this.dataSource.data);
+      console.log(ticket);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("---DATASOURCE---");
-      console.log(this.dataSource.data);
+      const dialogRef = this.dialog.open(DialogGenenarTicketComponent, {
+        data: ticket, height: '90%'
+      });
 
-      if (result == EstadosCompras.NOPAGADA) {
-        for (let i = 0; i < this.dataSource.data.length; i++) {
-          this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioEspecialItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].codigo)! });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("---DATASOURCE---");
+        console.log(this.dataSource.data);
+
+        if (result == EstadosCompras.NOPAGADA) {
+          for (let i = 0; i < this.dataSource.data.length; i++) {
+            this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
+          }
+          let e: Empleados = {idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222, 
+                            telefonoEmpleado: "231233", usuarioEmpleado:"user", contraseniaEmpleado:"user", permisoEmpleado:"" };
+          let compra: Compras = { idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0, 
+                                  fleteCompra: this.checkPedido? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido, 
+                                  items: this.listaItems, empleado: e, sucursal: this.authService.getCurrentSucursal()};
+          console.log("---COMPRA---");
+          console.log(compra);
+          /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
+          this.comunicacionService.postCompra(compra).subscribe({
+            next: (compraAgregado) => {
+              console.log("---COMPRA AGREGADA---");
+              console.log(compraAgregado);
+              this._snackBar.openFromComponent(MensajesComponent, {
+                duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
+              });
+              this.eventoCerrar.emit(this.ticket);
+            }, error: (err) => {
+              this._snackBar.openFromComponent(MensajesComponent, {
+                duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
+              });
+              console.log(err);
+            }
+          });
         }
-        let compra: Compras = { idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0, cliente: this.clienteElegido, items: this.listaItems };
-        console.log("---COMPRA---");
-        console.log(compra);
-        /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
-        this.comunicacionService.postCompra(compra).subscribe({next: (compraAgregado) => {
-          console.log("---COMPRA AGREGADA---");
-          console.log(compraAgregado);
-          this._snackBar.openFromComponent(MensajesComponent, {
-            duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
-          });
-          this.eventoCerrar.emit(this.ticket);
-        }, error: (err) => {
-          this._snackBar.openFromComponent(MensajesComponent, {
-            duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
-          });
-          console.log(err);
-        }});
-      }
-    });
+      });
+    } else {
+      this._snackBar.openFromComponent(MensajesComponent, {
+        duration: 5 * 1000, announcementMessage: "No ha ingresado materiales", data: { icono: "info", color: "mensaje-info" }
+      });
+    }
   }
 
   agregarCliente() {

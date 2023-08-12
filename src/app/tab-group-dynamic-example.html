@@ -1,36 +1,40 @@
-<img class="logo" src="../../assets/images/logo-chico.png" />
+<div *ngIf="isLoggedIn">
+  <img class="logo" src="../../assets/images/logo-chico.png" />
 
-<div class="boton-nuevo-ticket">
-  <button mat-raised-button color="accent" class="example-add-tab-button" (click)="addTab(true)">
-    <span class="material-symbols-outlined" style="font-size: 16px;">
-      note_add
-    </span> Nuevo ticket
-  </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="boton-menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="consultarTicket()">
-      <mat-icon>confirmation_number</mat-icon>
-      <span>Consulta tickets</span>
+  <div class="boton-nuevo-ticket">
+    <button mat-raised-button color="accent" class="example-add-tab-button" (click)="addTab(true)">
+      <span class="material-symbols-outlined" style="font-size: 16px;">
+        note_add
+      </span> Nuevo ticket
     </button>
-    <button mat-menu-item>
-      <mat-icon>no_accounts</mat-icon>
-      <span>Cerrar sesión</span>
+    <span class="span-usuario">Usuario: {{usuario}}</span><button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="boton-menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="consultarTicket()">
+        <mat-icon>confirmation_number</mat-icon>
+        <span>Consulta tickets</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>no_accounts</mat-icon>
+        <span>Cerrar sesión</span>
+      </button>
+    </mat-menu>
 
+  </div>
+
+  <img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0" />
+
+  <mat-tab-group #tabGroup class="tab-group" [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)" backgroundColor=primary>
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+
+      <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <app-content-tab [ticket]="index" (miEvento)="capturarCliente($event)"
+        (eventoCerrar)="removeTab($event)"></app-content-tab>
+    </mat-tab>
+  </mat-tab-group>
 </div>
-
-<img src="../../assets/images/cola.png" class="img-espera" *ngIf="tabs.length == 0" />
-
-<mat-tab-group #tabGroup class="tab-group" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
-  backgroundColor=primary>
-  <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
-
-    <button class="boton-derecha" mat-mini-fab color="warn" aria-label="Cerrar ticket" (click)="removeTab(index)">
-      <mat-icon>close</mat-icon>
-    </button>
-    <app-content-tab [ticket]="index" (miEvento)="capturarCliente($event)" (eventoCerrar)="removeTab($event)"></app-content-tab>
-  </mat-tab>
-</mat-tab-group>
+<app-login *ngIf="!isLoggedIn"></app-login>

@@ -1,6 +1,6 @@
-export interface Material {
+import { Materiales } from "./materiales";
+
+export interface Material extends Materiales {
     position: number;
-    codigo: number;
-    name: string;
     weight: number;
 }

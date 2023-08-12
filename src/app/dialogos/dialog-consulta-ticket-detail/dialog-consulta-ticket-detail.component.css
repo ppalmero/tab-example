@@ -1,0 +1,20 @@
+.div-consulta-tickets-detail{
+    width: 30%;
+    float: right;
+}
+
+@media only screen and (max-width: 850px) {
+    .div-consulta-tickets-detail{
+        clear: both;
+        float: none;
+        width: 100%;
+    }
+
+    td, th {
+        font-size: 0.7em;
+    }
+
+    h1{
+        margin-top: 10px;
+    }
+}

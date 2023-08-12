@@ -1,0 +1,26 @@
+<div class="div-fondo">
+    <div class="div-container">
+        <h1 class="h1-titulo">Ingresar al sistema</h1>
+
+        <p class="p-subtitulo">Usuario <span>*</span></p>
+        <mat-form-field appearance="fill" class="input-usuario">
+            <mat-label>Usuario</mat-label>
+            <input matInput [(ngModel)]="usuario.nombreUsuario" placeholder="Ej. Nougat">
+        </mat-form-field>
+
+        <p class="p-subtitulo">Contraseña <span>*</span></p>
+        <mat-form-field appearance="fill" class="input-usuario">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [(ngModel)]="usuario.contrasenaUsuario" [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+        <button mat-raised-button class="button-ingresar" color="primary" (click)="ingresar()"
+            cdkFocusInitial>Conectar</button>
+
+    </div>
+</div>

@@ -1,8 +1,10 @@
-import {Component, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket/dialog-consulta-ticket.component';
 import { MatTabGroup } from '@angular/material/tabs';
+import { Subscription } from 'rxjs';
+import { AutenticacionService } from './comunicacion/autenticacion.service';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -12,7 +14,7 @@ import { MatTabGroup } from '@angular/material/tabs';
   templateUrl: 'tab-group-dynamic-example.html',
   styleUrls: ['tab-group-dynamic-example.css'],
 })
-export class TabGroupDynamicExample {
+export class TabGroupDynamicExample implements OnInit {
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
 
   tabs:string[] = [];
@@ -20,8 +22,20 @@ export class TabGroupDynamicExample {
   nroTicket: number = 0;
   clienteLabel: String = "";
 
-  constructor(public dialog: MatDialog) {}
+  isLoggedIn: boolean = false;
 
+  usuario: string = "";
+
+  private subscription!: Subscription;
+
+  constructor(public dialog: MatDialog, private authService: AutenticacionService) {}
+
+  ngOnInit(): void {
+    this.subscription = this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
+      this.usuario = this.authService.getCurrentUser().nombreUsuario;/*** VER ***/
+    });
+  }
   addTab(selectAfterAdding: boolean) { 
     //consultar número de ticket siguiente
     this.tabs.push('Ticket de: ');
@@ -38,7 +52,7 @@ export class TabGroupDynamicExample {
 
   consultarTicket(){
     const dialogRefConsultar = this.dialog.open(DialogConsultaTicketComponent, {
-      height: '90%',
+      height: '100%',
       width: '70%',
     });
 

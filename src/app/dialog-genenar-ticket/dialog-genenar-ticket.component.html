@@ -1,5 +1,5 @@
 <div class="ticket-dialog">
-  <p class="ticket-numero">Ticket: {{data.nroTicket}}</p>
+  <p class="ticket-numero">Generar ticket</p>
   <mat-card class="ticket-card">
     <mat-card-header>
       <mat-card-title>Cliente: {{data.nombreCliente}}</mat-card-title>
@@ -10,7 +10,7 @@
       <p>Materiales:</p>
       <mat-selection-list>
         <mat-list-item *ngFor="let material of data.listaMateriales">
-          {{material.codigo}} - {{material.name}}: {{material.weight}}kg
+          {{material.idMaterial}} - {{material.nombreMaterial}}: {{material.weight + material.tipoMedidaMaterial}}
         </mat-list-item>
       </mat-selection-list>
     </mat-card-content>

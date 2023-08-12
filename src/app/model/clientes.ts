@@ -3,5 +3,7 @@ export interface Clientes {
     dniCliente: number,
     nombreCliente: string,
     apellidoCliente: string,
-    telefonoCliente: string
+    telefonoCliente: string,
+    cuitEmpresa: number,
+    nombreEmpresa: string
 }

@@ -71,7 +71,7 @@
       <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="pesoFormControl"
         required>
       <span matTextPrefix></span>
-      <span matTextSuffix>kg</span>
+      <span matTextSuffix #spanSufijo> </span>
     </mat-form-field>
 
     <button class="agregar-material boton-derecha" [disabled]="isDisabledCliente" mat-fab color="accent"
@@ -99,13 +99,13 @@
     <!-- Name Column -->
     <ng-container matColumnDef="Material">
       <th mat-header-cell *matHeaderCellDef> Material </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.nombreMaterial}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="Peso">
-      <th mat-header-cell *matHeaderCellDef> Peso </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}}kg </td>
+      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight | number: '1.0-2':'es'}} {{element.tipoMedidaMaterial}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -117,7 +117,7 @@
     Eliminar
   </button>
 
-  <mat-checkbox class="boton-derecha">Pedido por cliente</mat-checkbox>
+  <mat-checkbox class="boton-derecha" [(ngModel)]="checkPedido" [disabled]="isDisabledCliente">Pedido por cliente</mat-checkbox>
   <button class="finalizar-ticket boton-derecha" [disabled]="isDisabledCliente" mat-raised-button color="primary"
     (click)="generarTicket()">
     Finalizar ticket

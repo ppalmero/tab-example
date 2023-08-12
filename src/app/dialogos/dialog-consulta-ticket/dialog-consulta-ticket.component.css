@@ -1,3 +1,6 @@
+/*.h1-consultar-ticket{
+    font-size: 3vw;
+}*/
 .table-lista-tickets {
     width: 50%;
 }
@@ -28,4 +31,25 @@ th {
 .grid-materiales {
     top: 0;
     position: absolute;
+}
+
+.div-lista-tickets {
+    float: left;
+    width: 65%;
+}
+
+.boton-derecha{
+  float: right;
+  margin: 5px; 
+  z-index: 1000;
+}
+
+@media only screen and (max-width: 850px) {
+    .div-lista-tickets {
+        width: 100%;
+        clear: both;
+    }
+    td, th {
+        font-size: 0.7em;
+    }
 }

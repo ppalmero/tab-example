@@ -1,0 +1,34 @@
+.div-fondo{
+    background-color: #292c3a;
+    height: 100%;
+    padding-top: 100px;
+}
+
+.div-container{
+    background-color: white;
+    border-radius: 3px;
+padding: 20px;
+    margin: 0 auto;
+    width: 30%;
+}
+
+.h1-titulo{
+    font-weight: lighter;
+    text-align: center;
+}
+
+.input-usuario {
+    width: 100%;
+}
+
+.p-subtitulo {
+    font-weight: 500;
+}
+
+.p-subtitulo span{
+    color: red;
+}
+
+.button-ingresar{
+    float: right;
+}

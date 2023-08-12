@@ -21,6 +21,19 @@
     <input matInput [(ngModel)]="cliente.telefonoCliente">
   </mat-form-field>
 </div>
+<h1 mat-dialog-title>Datos empresa</h1>
+<div mat-dialog-content>
+  <p>Nombre empresa</p>
+  <mat-form-field>
+    <mat-label>Nombre empresa</mat-label>
+    <input matInput [(ngModel)]="cliente.nombreEmpresa">
+  </mat-form-field>
+  <p>CUIT empresa</p>
+  <mat-form-field>
+    <mat-label>CUIT empresa</mat-label>
+    <input matInput [(ngModel)]="cliente.cuitEmpresa">
+  </mat-form-field>
+</div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
   <button mat-button [mat-dialog-close]="cliente" cdkFocusInitial>Agregar</button>

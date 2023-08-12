@@ -103,6 +103,10 @@ mat-grid-tile :first-child{
     margin-top: 20px;
 }
 
+.mdc-dialog__surface {
+    overflow: hidden;
+  }
+
 @media only screen and (max-width: 850px) {
     .cliente-card{
         margin: 10px;
