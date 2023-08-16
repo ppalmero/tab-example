@@ -253,7 +253,7 @@ export class ContentTabComponent {
           let e: Empleados = {idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222, 
                             telefonoEmpleado: "231233", usuarioEmpleado:"user", contraseniaEmpleado:"user", permisoEmpleado:"" };
           let compra: Compras = { idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0, 
-                                  fleteCompra: this.checkPedido? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido, 
+                                  fleteCompra: this.checkPedido? 1 : 0/*ver si es true o false*/, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido, 
                                   items: this.listaItems, empleado: e, sucursal: this.authService.getCurrentSucursal()};
           console.log("---COMPRA---");
           console.log(compra);
