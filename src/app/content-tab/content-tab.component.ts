@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output, EventEmitter, TemplateRef, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -77,6 +77,7 @@ export class ContentTabComponent {
   listaItems: Items[] = [];
 
   checkPedido: boolean = false;
+  seleccion: boolean;
 
   constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService, private authService: AutenticacionService,
     private _snackBar: MatSnackBar) { }
@@ -250,11 +251,15 @@ export class ContentTabComponent {
           for (let i = 0; i < this.dataSource.data.length; i++) {
             this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
           }
-          let e: Empleados = {idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222, 
-                            telefonoEmpleado: "231233", usuarioEmpleado:"user", contraseniaEmpleado:"user", permisoEmpleado:"" };
-          let compra: Compras = { idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0, 
-                                  fleteCompra: this.checkPedido? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido, 
-                                  items: this.listaItems, empleado: e, sucursal: this.authService.getCurrentSucursal()};
+          let e: Empleados = {
+            idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222,
+            telefonoEmpleado: "231233", usuarioEmpleado: "user", contraseniaEmpleado: "user", permisoEmpleado: ""
+          };
+          let compra: Compras = {
+            idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
+            fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
+            items: this.listaItems, empleado: e, sucursal: this.authService.getCurrentSucursal()
+          };
           console.log("---COMPRA---");
           console.log(compra);
           /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
@@ -299,4 +304,27 @@ export class ContentTabComponent {
     });
   }
 
+  onInput(event: any) {
+    if (this.seleccion) {
+      this.moveToNextInput();
+      this.seleccion = false;
+    }
+  }
+
+  moveToNextInput() {
+    console.log("--ENTER: MOVETONEXT ");
+    const nextInput = document.getElementById("materialinputid");
+    console.log(nextInput);
+    if (nextInput) {
+      console.log("--ENTER: nextinput ");
+      nextInput.focus();
+    }
+  }
+
+  seleccionaOpcion() {
+    this.seleccion = true;
+  }
+  selectAllText(event: any) {
+    event.target.select();
+  }
 }

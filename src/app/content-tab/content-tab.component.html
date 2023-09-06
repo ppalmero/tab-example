@@ -57,10 +57,10 @@
     <mat-form-field class="input-materiales" appearance="fill">
       <mat-label>Material</mat-label>
       <input type="text" placeholder="Ingrese código o nombre de Material" aria-label="Material" matInput
-        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" required>
-      <mat-autocomplete #autoMaterial="matAutocomplete">
+        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" (focus)="onInput($event)" (blur)="onInput($event)" required>
+      <mat-autocomplete #autoMaterial="matAutocomplete" (optionSelected)="seleccionaOpcion()" (keyup.enter)="seleccionaOpcion()">
         <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial"
-          [value]="option.idMaterial + ' - ' + option.nombreMaterial">
+          [value]="option.idMaterial + ' - ' + option.nombreMaterial" (keyup.enter)="onInput($event)">
           {{option.idMaterial + ' - ' + option.nombreMaterial}}
         </mat-option>
       </mat-autocomplete>
@@ -68,8 +68,8 @@
 
     <mat-form-field class="input-materiales" appearance="fill" floatLabel="always">
       <mat-label>Cantidad</mat-label>
-      <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="pesoFormControl"
-        required>
+      <input matInput [id]="'materialinputid'" type="number" class="example-right-align" placeholder="0" [formControl]="pesoFormControl"
+      (focus)="selectAllText($event)" required>
       <span matTextPrefix></span>
       <span matTextSuffix #spanSufijo> </span>
     </mat-form-field>
