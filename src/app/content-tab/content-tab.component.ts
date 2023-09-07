@@ -307,7 +307,7 @@ export class ContentTabComponent {
   onInput(event: any) {
     if (this.seleccion) {
       this.moveToNextInput();
-      this.seleccion = false;
+      this.seleccion = false; 
     }
   }
 
