@@ -57,10 +57,10 @@
     <mat-form-field class="input-materiales" appearance="fill">
       <mat-label>Material</mat-label>
       <input type="text" placeholder="Ingrese código o nombre de Material" aria-label="Material" matInput
-        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" (focus)="onInput($event)" (blur)="onInput($event)" required>
-      <mat-autocomplete #autoMaterial="matAutocomplete" (optionSelected)="seleccionaOpcion()" (keyup.enter)="seleccionaOpcion()">
+        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" (change)="onInput($event)" (blur)="onInput($event)" required>
+      <mat-autocomplete #autoMaterial="matAutocomplete" (optionSelected)="seleccionaOpcion()">
         <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial"
-          [value]="option.idMaterial + ' - ' + option.nombreMaterial" (keyup.enter)="onInput($event)">
+          [value]="option.idMaterial + ' - ' + option.nombreMaterial">
           {{option.idMaterial + ' - ' + option.nombreMaterial}}
         </mat-option>
       </mat-autocomplete>

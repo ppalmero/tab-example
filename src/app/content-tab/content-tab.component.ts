@@ -305,6 +305,8 @@ export class ContentTabComponent {
   }
 
   onInput(event: any) {
+    console.log("--GANO EL FOCO ");
+    
     if (this.seleccion) {
       this.moveToNextInput();
       this.seleccion = false; 
@@ -323,6 +325,8 @@ export class ContentTabComponent {
 
   seleccionaOpcion() {
     this.seleccion = true;
+    //this.moveToNextInput();
+    console.log("--SE SELECCIONÓ OPCIÓN ");
   }
   selectAllText(event: any) {
     event.target.select();
