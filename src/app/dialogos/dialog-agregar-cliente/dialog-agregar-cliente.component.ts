@@ -8,7 +8,7 @@ import { Clientes } from 'src/app/model/clientes';
   styleUrls: ['./dialog-agregar-cliente.component.css']
 })
 export class DialogAgregarClienteComponent {
-  cliente: Clientes={idCliente:-1,apellidoCliente:"",nombreCliente:"",dniCliente:-1, telefonoCliente:"", nombreEmpresa: "", cuitEmpresa: -1};
+  cliente: Clientes={idCliente:0,apellidoCliente:"",nombreCliente:"",dniCliente:0, telefonoCliente:"", nombreEmpresa: "", cuitEmpresa: 0};
 
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarClienteComponent>,

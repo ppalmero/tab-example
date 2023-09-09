@@ -34,10 +34,10 @@
       </mat-form-field>
     </form>
   </div>
-  <div>
+  <!--div>
     <p style="font-size: 30pt; color: white;">relleno</p>
 
-  </div>
+  </div-->
   <div [className]="classPie" (click)="clienteSiguiente()">
     <p>SIGUIENTE
       <span class="material-symbols-outlined" style="font-size: 16px;">
@@ -56,10 +56,11 @@
   <form class="example-form">
     <mat-form-field class="input-materiales" appearance="fill">
       <mat-label>Material</mat-label>
-      <input type="text" placeholder="Ingrese código o nombre de Material" aria-label="Material" matInput
-        [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" (change)="onInput($event)" (blur)="onInput($event)" required>
-      <mat-autocomplete #autoMaterial="matAutocomplete" (optionSelected)="seleccionaOpcion()">
-        <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial"
+      <input [id]="'nombrematerialinputid'" type="text" placeholder="Ingrese código o nombre de Material" aria-label="Material" 
+      matInput [formControl]="materialesFormControl" [matAutocomplete]="autoMaterial" (change)="mostrarCambio($event)" required
+      (keydown)="onKeyDown($event)">
+      <mat-autocomplete #autoMaterial="matAutocomplete" (optionSelected)="moveToNextInput()">
+        <mat-option *ngFor="let option of materiales | filterMaterial:ingresaMaterial" (onSelectionChange)="moveToNextInput()"
           [value]="option.idMaterial + ' - ' + option.nombreMaterial">
           {{option.idMaterial + ' - ' + option.nombreMaterial}}
         </mat-option>
@@ -73,13 +74,13 @@
       <span matTextPrefix></span>
       <span matTextSuffix #spanSufijo> </span>
     </mat-form-field> 
-
-    <button class="agregar-material boton-derecha" [disabled]="isDisabledCliente" mat-fab color="accent"
+<button class="agregar-material boton-derecha" [disabled]="isDisabledCliente" mat-fab color="accent"
       aria-label="Agregar nuevo material" (click)="agregarMaterial()">
       <mat-icon>add_box</mat-icon>
     </button>
   </form>
 
+    
   <table class="tabla-materiales" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Checkbox Column -->

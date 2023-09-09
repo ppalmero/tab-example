@@ -110,6 +110,7 @@ export class ContentTabComponent {
         const materialesFiltro: Materiales[] = this.optionsMaterial.filter(
           (elemento) => (elemento.idMaterial + " - " + elemento.nombreMaterial).includes(valor!));
         if (materialesFiltro.length > 0) {
+      //this.moveToNextInput();
           this.email.nativeElement.innerText = materialesFiltro[0].tipoMedidaMaterial;
         }
       }
@@ -191,6 +192,10 @@ export class ContentTabComponent {
     //console.log(this.dataSource.data);
     this.materialesFormControl.setValue("");
     this.pesoFormControl.setValue("");
+    const nextInput = document.getElementById("nombrematerialinputid");
+    if (nextInput) {
+      nextInput.focus();
+    }
   }
 
   eliminarMaterial() {
@@ -325,10 +330,21 @@ export class ContentTabComponent {
 
   seleccionaOpcion() {
     this.seleccion = true;
-    //this.moveToNextInput();
+    this.moveToNextInput();
     console.log("--SE SELECCIONÓ OPCIÓN ");
   }
   selectAllText(event: any) {
     event.target.select();
+  }
+
+  mostrarCambio(event: any){
+    console.log("--Valor input materiales" + event.target.value);
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.moveToNextInput();
+    }
+    
   }
 }

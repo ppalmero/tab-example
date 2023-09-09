@@ -1,20 +1,37 @@
-.div-consulta-tickets-detail{
-    width: 30%;
-    float: right;
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
+
+h1 {
+    background-color: #00a650;
+    color: white !important;
+    font-family: 'Archivo Narrow', sans-serif !important;
+    margin-bottom: 20px;
+
+}
+
+.div-consulta-tickets-detail {
+    /*width: 30%;
+    float: right;*/
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.th-lista {
+    background-color: #a9d035 !important;
 }
 
 @media only screen and (max-width: 850px) {
-    .div-consulta-tickets-detail{
+    .div-consulta-tickets-detail {
         clear: both;
         float: none;
         width: 100%;
     }
 
-    td, th {
+    td,
+    th {
         font-size: 0.7em;
     }
 
-    h1{
+    h1 {
         margin-top: 10px;
     }
 }

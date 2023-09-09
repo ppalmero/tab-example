@@ -1,40 +1,32 @@
 <h1 mat-dialog-title>Nuevo cliente</h1>
 <div mat-dialog-content>
-  <p>Nombre</p>
-  <mat-form-field>
+  <mat-form-field class="mat-input mat-input-izq">
     <mat-label>Nombre</mat-label>
     <input matInput [(ngModel)]="cliente.nombreCliente">
   </mat-form-field>
-  <p>Apellido</p>
-  <mat-form-field>
+  <mat-form-field class="mat-input">
     <mat-label>Apellido</mat-label>
     <input matInput [(ngModel)]="cliente.apellidoCliente">
   </mat-form-field>
-  <p>DNI</p>
-  <mat-form-field>
+  <mat-form-field class="mat-input mat-input-izq">
     <mat-label>DNI</mat-label>
     <input matInput [(ngModel)]="cliente.dniCliente">
   </mat-form-field>
-  <p>Teléfono</p>
-  <mat-form-field>
+  <mat-form-field class="mat-input">
     <mat-label>Teléfono</mat-label>
     <input matInput [(ngModel)]="cliente.telefonoCliente">
   </mat-form-field>
-</div>
-<h1 mat-dialog-title>Datos empresa</h1>
-<div mat-dialog-content>
-  <p>Nombre empresa</p>
-  <mat-form-field>
-    <mat-label>Nombre empresa</mat-label>
-    <input matInput [(ngModel)]="cliente.nombreEmpresa">
-  </mat-form-field>
-  <p>CUIT empresa</p>
-  <mat-form-field>
-    <mat-label>CUIT empresa</mat-label>
-    <input matInput [(ngModel)]="cliente.cuitEmpresa">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="cliente" cdkFocusInitial>Agregar</button>
+  <h2 mat-dialog-title>Datos empresa</h2>
+    <mat-form-field class="mat-input mat-input-izq">
+      <mat-label>Nombre empresa</mat-label>
+      <input matInput [(ngModel)]="cliente.nombreEmpresa">
+    </mat-form-field>
+    <mat-form-field class="mat-input">
+      <mat-label>CUIT empresa</mat-label>
+      <input matInput [(ngModel)]="cliente.cuitEmpresa">
+    </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="cliente" cdkFocusInitial>Agregar</button>
+  </div>
 </div>

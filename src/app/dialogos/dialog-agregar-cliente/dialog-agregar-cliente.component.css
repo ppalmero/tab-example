@@ -1,0 +1,16 @@
+.mat-input{
+    width: 45%;
+}
+
+#prueba::ng-deep .mat-form-field-label{
+    color: #F60 !important;
+}
+
+.mat-input-izq{
+    margin-right: 20px;
+}
+
+
+mat-label{
+    color: #444;
+}

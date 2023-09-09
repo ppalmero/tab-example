@@ -10,7 +10,7 @@ export class FilterMaterialPipe implements PipeTransform {
     if (!items) return [];
     if (!searchTerm) return items;
     searchTerm = searchTerm.toString().toLowerCase();
-    return items.filter((item) => item.idMaterial.toString().includes(searchTerm) ||
+    return items.filter((item) => item.idMaterial.toString() == (searchTerm) ||
                                   item.nombreMaterial.toLowerCase().includes(searchTerm));
   }
 

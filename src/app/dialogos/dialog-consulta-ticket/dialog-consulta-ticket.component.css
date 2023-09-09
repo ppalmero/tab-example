@@ -1,6 +1,11 @@
-/*.h1-consultar-ticket{
-    font-size: 3vw;
-}*/
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
+
+h1{
+    background-color: #00a650;
+    color: white !important;
+    font-family: 'Archivo Narrow', sans-serif !important;
+}
+
 .table-lista-tickets {
     width: 50%;
 }
@@ -35,7 +40,7 @@ th {
 
 .div-lista-tickets {
     float: left;
-    width: 65%;
+    width: 100%;
 }
 
 .boton-derecha{
@@ -43,6 +48,11 @@ th {
   margin: 5px; 
   z-index: 1000;
 }
+
+.th-lista {
+    background-color: #a9d035 !important;
+}
+
 
 @media only screen and (max-width: 850px) {
     .div-lista-tickets {

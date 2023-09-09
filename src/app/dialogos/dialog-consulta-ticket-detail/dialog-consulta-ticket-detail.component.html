@@ -4,19 +4,19 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> Item </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lista"> Item </th>
       <td mat-cell *matCellDef="let compra"> {{compra.material.idMaterial}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lista"> Nombre </th>
       <td mat-cell *matCellDef="let compra"> {{compra.material.nombreMaterial}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lista"> Cantidad </th>
       <td mat-cell *matCellDef="let compra"> {{compra.cantidadItemCompra + compra.material.tipoMedidaMaterial}} </td>
     </ng-container>
 
