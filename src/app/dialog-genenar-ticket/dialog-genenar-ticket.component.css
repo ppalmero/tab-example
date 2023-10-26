@@ -4,13 +4,19 @@
     max-width: 400px;
 }
 
-.ticket-dialog{
+.ticket-dialog {
     background-color: #ddd;
     padding: 30px;
 }
 
-.ticket-numero{
+.ticket-numero {
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 20pt;
     font-weight: bold;
+}
+
+.ticket-mensaje {
+    color: #00a650;
+    text-align: right;
+    font-style: italic;
 }

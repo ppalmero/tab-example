@@ -5,5 +5,6 @@ export class Ticket {
                     public nombreCliente: string,
                     public dniCliente: string,
                     public telefonoCliente: string,
-                    public listaMateriales: Array<Material>){}
+                    public listaMateriales: Array<Material>,
+                    public checkPedido: boolean){}
 }

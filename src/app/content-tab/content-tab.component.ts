@@ -161,7 +161,9 @@ export class ContentTabComponent {
   }
 
   agregarMaterial() {
-    if (!this.materialesFormControl.value) {
+    if (!this.materialesFormControl.value || 
+      this.optionsMaterial.filter((elemento) => (elemento.idMaterial + " - " + 
+        elemento.nombreMaterial).includes(this.materialesFormControl.value!)).length == 0) {
       this._snackBar.openFromComponent(MensajesComponent, {
         duration: 5 * 1000, announcementMessage: "Ingrese material", data: { icono: "info", color: "mensaje-info" }
       });
@@ -241,7 +243,8 @@ export class ContentTabComponent {
         this.clienteNombreFormControl.value!,
         this.clienteDNIFormControl.value!,
         this.clienteTelefonoFormControl.value!,
-        this.dataSource.data);
+        this.dataSource.data,
+        this.checkPedido);
       console.log(ticket);
 
       const dialogRef = this.dialog.open(DialogGenenarTicketComponent, {
