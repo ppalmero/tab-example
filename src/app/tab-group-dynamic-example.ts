@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket/dialog-consulta-ticket.component';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -17,7 +17,7 @@ import { AutenticacionService } from './comunicacion/autenticacion.service';
 export class TabGroupDynamicExample implements OnInit {
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
 
-  tabs:string[] = [];
+  tabs: string[] = [];
   selected = new FormControl(0);
   nroTicket: number = 0;
   clienteLabel: String = "";
@@ -28,21 +28,27 @@ export class TabGroupDynamicExample implements OnInit {
 
   private subscription!: Subscription;
 
-  constructor(public dialog: MatDialog, private authService: AutenticacionService) {}
+  constructor(public dialog: MatDialog, private authService: AutenticacionService) { }
 
   ngOnInit(): void {
-    this.subscription = this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
-      this.isLoggedIn = isLoggedIn;
-      this.usuario = this.authService.getCurrentUser().nombreUsuario;/*** VER ***/
+    this.subscription = this.authService.currentUser$.subscribe((isLoggedIn) => {
+      console.log("tab- " + isLoggedIn);
+      if (isLoggedIn.idEmpleado != 0) {
+        this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
     });
   }
-  addTab(selectAfterAdding: boolean) { 
+
+  addTab(selectAfterAdding: boolean) {
     //consultar número de ticket siguiente
     this.tabs.push('Ticket de: ');
     this.nroTicket++;
 
     //if (selectAfterAdding) {
-      this.selected.setValue(this.tabs.length - 1);
+    this.selected.setValue(this.tabs.length - 1);
     //}
   }
 
@@ -50,7 +56,7 @@ export class TabGroupDynamicExample implements OnInit {
     this.tabs.splice(index, 1);
   }
 
-  consultarTicket(){
+  consultarTicket() {
     const dialogRefConsultar = this.dialog.open(DialogConsultaTicketComponent, {
       height: '100%',
       width: '70%',
@@ -70,6 +76,11 @@ export class TabGroupDynamicExample implements OnInit {
 
     const elemento = document.getElementById(pestana);
     console.log(elemento?.children[2].firstChild);
-    elemento!.children[2].firstChild!.textContent="Ticket de: " + tabCliente[1];
+    elemento!.children[2].firstChild!.textContent = "Ticket de: " + tabCliente[1];
+  }
+
+  cerrarSesion(){
+    this.authService.logout();
+    this.isLoggedIn = false;
   }
 }

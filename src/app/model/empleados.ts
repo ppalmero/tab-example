@@ -1,3 +1,5 @@
+import { Sucursales } from "./sucursales";
+
 export interface Empleados {
     idEmpleado: number,
     dniEmpleado: number,
@@ -7,4 +9,5 @@ export interface Empleados {
     usuarioEmpleado: string,
     contraseniaEmpleado: string,
     permisoEmpleado: string,
+    sucursal?: Sucursales
 }

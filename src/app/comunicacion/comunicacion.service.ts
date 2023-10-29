@@ -5,6 +5,7 @@ import { Materiales } from '../model/materiales';
 import { Clientes } from '../model/clientes';
 import { Compras } from '../model/compras';
 import { TicketCompra } from '../model/ticket-compra';
+import { Empleados } from '../model/empleados';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,13 @@ export class ComunicacionService {
     return this.http.post<Clientes>(this.apiServer + 'cliente', cliente).pipe(
       tap((newHero: Clientes) => console.log(`added hero w/ id=${newHero.idCliente}`)),
       catchError(this.handleError<Clientes>('addHero'))
+    );
+  }
+
+  iniciarSesion(usuario: Empleados) {
+    return this.http.post<Empleados>(this.apiServer + 'empleado/sesion', usuario).pipe(
+      tap((newHero: Empleados) => console.log(`added hero w/ id=${newHero.idEmpleado}`)),
+      catchError(this.handleError<Empleados>('addHero'))
     );
   }
 

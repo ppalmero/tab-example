@@ -11,7 +11,8 @@
         <p class="p-subtitulo">Contraseña <span>*</span></p>
         <mat-form-field appearance="fill" class="input-usuario">
             <mat-label>Contraseña</mat-label>
-            <input matInput [(ngModel)]="usuario.contrasenaUsuario" [type]="hide ? 'password' : 'text'">
+            <input matInput [(ngModel)]="usuario.contrasenaUsuario" [type]="hide ? 'password' : 'text'"
+                (keyup.enter)="ingresar()">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -21,6 +22,6 @@
         <button mat-raised-button (click)="onNoClick()">Cancelar</button>
         <button mat-raised-button class="button-ingresar" color="primary" (click)="ingresar()"
             cdkFocusInitial>Conectar</button>
-
+            <h1 class="h1-mensajeNOOK"  [ngClass]="{'h1-mensajeDisplay': logResult == 'nook'}">Usuario o contraseña incorrecta.</h1>
     </div>
 </div>

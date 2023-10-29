@@ -6,7 +6,6 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FiltroPersonalizadoService } from 'src/app/comunicacion/filtro-personalizado.service';
-import { Clientes } from 'src/app/model/clientes';
 import { FormatoFechaService } from 'src/app/comunicacion/formato-fecha.service';
 
 @Component({
@@ -22,35 +21,49 @@ export class DialogConsultaTicketComponent implements OnInit {
   selectedMaster: Compras; // Arreglo para almacenar los datos maestros seleccionados
   // Objeto para almacenar el maestro seleccionado
 
-  displayedColumns: string[] = ['id', 'cliente', 'total', 'estado', 'fecha'];
+  displayedColumns: string[] = ['idCompra', 'cliente', 'precioTotalCompra', 'estado', 'fechaCompra'];
   dataSource: MatTableDataSource<Compras>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private dataService: ComunicacionService, public filtro: FiltroPersonalizadoService,
-              public formatoFecha: FormatoFechaService) {
+    public formatoFecha: FormatoFechaService) {
 
-    this.dataSource = new MatTableDataSource<Compras>(this.masterData);
+    this.dataSource = new MatTableDataSource<Compras>();
+
+  }
+
+  ngOnInit() {
     this.dataService.getListaTickets().subscribe(
       (tickets) => {
         // Maneja la respuesta del servidor
         this.masterData = tickets;
-        this.dataSource.data.push(...this.masterData);
-        //this.dataSource = new MatTableDataSource<Compras>(this.masterData);
+        //this.dataSource.data.push(...this.masterData);
+        this.dataSource = new MatTableDataSource(tickets);
         this.table.renderRows();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (item,property)=>{
+
+          // where item is your class/interface data
+          // where property is your column name
+         
+                switch(property){
+                    case 'idCompra' : return item.idCompra;
+                    case 'cliente' : return item.cliente.apellidoCliente;
+                    case 'precioTotalCompra' : return item.precioTotalCompra;
+                    case 'estado' : return item.estado;
+                    case 'fecha' : return item.fechaCompra;
+                    default: return item.idCompra;
+                 }
+         }
       }
     ); // Obtén los datos maestros del servicio
     //this.dataSource = new MatTableDataSource<Compras>(this.masterData);
   }
 
-  ngOnInit() {
-  }
-
   ngAfterViewInit() {
-
   }
 
   onSelect(master: any) {
@@ -80,10 +93,11 @@ export class DialogConsultaTicketComponent implements OnInit {
     }
   }
 
-  getFecha(fecha: number){
+  getFecha(fecha: number) {
     return this.formatoFecha.formatearFecha(new Date(fecha));
   }
 
-  cerrarDialog(){
+  cerrarDialog() {
   }
+
 }

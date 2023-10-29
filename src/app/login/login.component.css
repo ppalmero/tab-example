@@ -32,3 +32,15 @@ padding: 20px;
 .button-ingresar{
     float: right;
 }
+
+.h1-mensajeNOOK{
+    color: red;
+    display: none;
+    font-weight: lighter;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.h1-mensajeDisplay{
+    display: block;
+}
