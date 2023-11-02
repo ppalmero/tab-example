@@ -44,7 +44,7 @@ export class TabGroupDynamicExample implements OnInit {
 
   addTab(selectAfterAdding: boolean) {
     //consultar número de ticket siguiente
-    this.tabs.push('Ticket de: ');
+    this.tabs.push('Ticket de: ' + this.nroTicket);
     this.nroTicket++;
 
     //if (selectAfterAdding) {
@@ -53,6 +53,9 @@ export class TabGroupDynamicExample implements OnInit {
   }
 
   removeTab(index: number) {
+    console.log("TAB a remover: " + index)
+    console.log("TABS");
+    console.log(this.tabs);
     this.tabs.splice(index, 1);
   }
 

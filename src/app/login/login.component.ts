@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent {
   hide: boolean = true;
-  usuario: Usuario = {nombreUsuario: "user", contrasenaUsuario: "user"};
+  usuario: Usuario = {nombreUsuario: "Pablo", contrasenaUsuario: "palmero"};
   loggedIn: boolean = false;
   logResult: string = "";
   subscriptionUsuario!: Subscription;
