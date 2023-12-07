@@ -31,6 +31,11 @@ export class TabGroupDynamicExample implements OnInit {
   constructor(public dialog: MatDialog, private authService: AutenticacionService) { }
 
   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.isLoggedIn = true;
+      this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
+    }
+
     this.subscription = this.authService.currentUser$.subscribe((isLoggedIn) => {
       console.log("tab- " + isLoggedIn);
       if (isLoggedIn.idEmpleado != 0) {
@@ -44,12 +49,15 @@ export class TabGroupDynamicExample implements OnInit {
 
   addTab(selectAfterAdding: boolean) {
     //consultar número de ticket siguiente
-    this.tabs.push('Ticket de: ' + this.nroTicket);
-    this.nroTicket++;
+    if (this.authService.isAuthenticated()) {
+      this.tabs.push('Ticket de: ' + this.nroTicket);
+      this.nroTicket++;
 
-    //if (selectAfterAdding) {
-    this.selected.setValue(this.tabs.length - 1);
-    //}
+      //if (selectAfterAdding) {
+      this.selected.setValue(this.tabs.length - 1);
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   removeTab(index: number) {
@@ -82,7 +90,7 @@ export class TabGroupDynamicExample implements OnInit {
     elemento!.children[2].firstChild!.textContent = "Ticket de: " + tabCliente[1];
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     this.authService.logout();
     this.isLoggedIn = false;
   }

@@ -26,6 +26,10 @@ export class DialogConsultaTicketComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  defaultSort = {
+    active: 'fechaCompra', // El nombre de la columna por la que deseas ordenar por defecto
+    direction: 'asc' // La dirección de la ordenación (ascendente o descendente)
+  };
 
   constructor(private dataService: ComunicacionService, public filtro: FiltroPersonalizadoService,
     public formatoFecha: FormatoFechaService) {
@@ -43,6 +47,7 @@ export class DialogConsultaTicketComponent implements OnInit {
         this.dataSource = new MatTableDataSource(tickets);
         this.table.renderRows();
         this.dataSource.paginator = this.paginator;
+        this.sort.sort({ id: this.defaultSort.active, start: 'desc', disableClear: false });
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (item,property)=>{
 
