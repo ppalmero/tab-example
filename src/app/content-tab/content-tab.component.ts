@@ -257,7 +257,7 @@ export class ContentTabComponent {
 
         if (result == EstadosCompras.NOPAGADA) {
           for (let i = 0; i < this.dataSource.data.length; i++) {
-            this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: -1, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
+            this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: 0, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
           }
           /*let e: Empleados = {
             idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222,
