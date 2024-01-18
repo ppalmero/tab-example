@@ -346,7 +346,13 @@ export class ContentTabComponent {
 
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.moveToNextInput();
+      let m: Materiales[] = this.optionsMaterial.filter((elemento) => (elemento.idMaterial + " - " + 
+        elemento.nombreMaterial).includes(this.materialesFormControl.value!));
+      if(m.length > 0)
+        {
+          this.materialesFormControl.setValue(m[0].idMaterial + " - " + m[0].nombreMaterial);
+          this.moveToNextInput();
+        }
     }
     
   }
