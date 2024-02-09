@@ -297,7 +297,9 @@ export class ContentTabComponent {
 
   agregarCliente() {
 
-    const dialogRefAgregar = this.dialog.open(DialogAgregarClienteComponent);
+    const dialogRefAgregar = this.dialog.open(DialogAgregarClienteComponent, {
+      data: this.clientes,
+    });
 
     dialogRefAgregar.afterClosed().subscribe(result => {
       console.log(result);
