@@ -16,9 +16,11 @@ import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket
 import { DialogConsultaTicketDetailComponent } from './dialogos/dialog-consulta-ticket-detail/dialog-consulta-ticket-detail.component';
 import { MensajesComponent } from './dialogos/mensajes/mensajes.component';
 import { LoginComponent } from './login/login.component';
+import { DialogDatosPersonalesComponent } from './dialogos/dialog-datos-personales/dialog-datos-personales.component';
+import { DialogCambiarContraseniaComponent } from './dialogos/dialog-datos-personales/dialog-cambiar-contrasenia/dialog-cambiar-contrasenia.component';
 
 @NgModule({
-  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent, MensajesComponent, LoginComponent],
+  declarations: [TabGroupDynamicExample, ContentTabComponent, DialogGenenarTicketComponent, FilterClientePipe, FilterMaterialPipe, DialogAgregarClienteComponent, DialogConsultaTicketComponent, DialogConsultaTicketDetailComponent, MensajesComponent, LoginComponent, DialogDatosPersonalesComponent, DialogCambiarContraseniaComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

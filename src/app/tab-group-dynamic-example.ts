@@ -5,6 +5,7 @@ import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket
 import { MatTabGroup } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { AutenticacionService } from './comunicacion/autenticacion.service';
+import { DialogDatosPersonalesComponent } from './dialogos/dialog-datos-personales/dialog-datos-personales.component';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -88,6 +89,14 @@ export class TabGroupDynamicExample implements OnInit {
     const elemento = document.getElementById(pestana);
     console.log(elemento?.children[2].firstChild);
     elemento!.children[2].firstChild!.textContent = "Ticket de: " + tabCliente[1];
+  }
+
+  datosPersonales() {
+    const dialogRefConsultar = this.dialog.open(DialogDatosPersonalesComponent);
+
+    dialogRefConsultar.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   cerrarSesion() {
