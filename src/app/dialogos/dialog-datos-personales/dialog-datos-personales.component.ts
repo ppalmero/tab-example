@@ -42,7 +42,7 @@ export class DialogDatosPersonalesComponent {
     console.log("--EMPLEADO CURRRENT --");
     console.log(this.authService.getCurrentUser());
     if (this.empleadoLogueado.contraseniaEmpleado == "") {
-      this.empleadoLogueado.contraseniaEmpleado = this.authService.getCurrentUser().contraseniaEmpleado;
+      this.empleadoLogueado.contraseniaEmpleado = "-1";
     }
     this.usuarioService.postEmpleado(this.empleadoLogueado).subscribe(empleadoAgregado => {
       if (empleadoAgregado) {
@@ -50,6 +50,7 @@ export class DialogDatosPersonalesComponent {
           duration: 5 * 1000, announcementMessage: "Datos actualizados.",
           data: { icono: "task", color: "mensaje-ok" }, verticalPosition: 'bottom'
         });
+        this.dialog.closeAll();
       }
     });
   }
