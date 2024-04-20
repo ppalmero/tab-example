@@ -78,6 +78,8 @@ export class ContentTabComponent {
 
   checkPedido: boolean = false;
   seleccion: boolean;
+  
+  cargaCompleta: boolean = true;
 
   constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService, private authService: AutenticacionService,
     private _snackBar: MatSnackBar) { }
@@ -256,6 +258,7 @@ export class ContentTabComponent {
         console.log(this.dataSource.data);
 
         if (result == EstadosCompras.NOPAGADA) {
+          this.cargaCompleta = false;
           for (let i = 0; i < this.dataSource.data.length; i++) {
             this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: 0, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
           }
@@ -279,11 +282,14 @@ export class ContentTabComponent {
                 duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
               });
               this.eventoCerrar.emit(this.ticket);
+              setTimeout(() => {}, 1000);
+              this.cargaCompleta = true;
             }, error: (err) => {
               this._snackBar.openFromComponent(MensajesComponent, {
                 duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
               });
               console.log(err);
+              this.cargaCompleta = true;
             }
           });
         }
