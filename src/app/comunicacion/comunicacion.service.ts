@@ -73,6 +73,11 @@ export class ComunicacionService {
     );
   }
 
+  getFechaServidor(): Observable<number> {
+    // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
+    return this.http.get<number>(this.apiServer + 'consulta/fecha');
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     console.log("handler error");
     return (error: any): Observable<T> => {
