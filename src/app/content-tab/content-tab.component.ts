@@ -87,10 +87,11 @@ export class ContentTabComponent {
   ngOnInit() {
     this.miTicket = this.ticket;
 
+    this.cargaCompleta = false;
     this.comunicacionService.getListaClientes().subscribe(data => {
       this.clientes = data;
       this.optionsCliente = data;
-      console.log(this.optionsCliente);
+      this.cargaCompleta = true;
     });
 
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
