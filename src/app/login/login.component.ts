@@ -15,6 +15,7 @@ export class LoginComponent {
   loggedIn: boolean = false;
   logResult: string = "";
   subscriptionUsuario!: Subscription;
+  cargaCompleta: boolean = true;
   
   constructor(private router: Router, private authService: AutenticacionService) { }
 
@@ -27,6 +28,7 @@ export class LoginComponent {
         this.loggedIn = true;
         this.usuario.contrasenaUsuario = "";
         this.logResult = "ok";
+        this.cargaCompleta = true;
         this.router.navigate(['.']);
         /*this.getService.getCajaAbierta(empleado.sucursal?.idSucursal!).subscribe(cajaAbierta => {
           //console.log("lista clientes"  + dataClientes);
@@ -52,6 +54,7 @@ export class LoginComponent {
 
   ingresar(): void {
     this.authService.login(this.usuario.nombreUsuario, this.usuario.contrasenaUsuario);
+    this.cargaCompleta = false;
     /*if (success) {
       this.loggedIn = true;
       this.router.navigate(['.']);

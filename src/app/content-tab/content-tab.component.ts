@@ -87,12 +87,14 @@ export class ContentTabComponent {
   ngOnInit() {
     this.miTicket = this.ticket;
 
-    this.cargaCompleta = false;
+    /*this.cargaCompleta = false;
     this.comunicacionService.getListaClientes().subscribe(data => {
       this.clientes = data;
       this.optionsCliente = data;
       this.cargaCompleta = true;
-    });
+    });*/
+
+    this.clientes = this.authService.getClientes();
 
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
@@ -315,6 +317,7 @@ export class ContentTabComponent {
         console.log(cliente);
         this.comunicacionService.postCliente(cliente).subscribe(clienteAgregado => {
           this.clientes.push(clienteAgregado);
+          this.authService.addCliente(clienteAgregado);
           //this.dataSource.data = this.clientes
         });
       }

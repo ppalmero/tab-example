@@ -20,15 +20,17 @@
     <h2 mat-dialog-title>Datos empresa (completar sólo si el cliente representa a una empresa)</h2>
     <mat-form-field class="mat-input mat-input-izq">
       <mat-label>Nombre empresa</mat-label>
-      <input matInput [(ngModel)]="cliente.nombreEmpresa"  >
+      <input matInput [(ngModel)]="cliente.nombreEmpresa">
     </mat-form-field>
     <mat-form-field class="mat-input">
       <mat-label>CUIT empresa</mat-label>
-      <input matInput [(ngModel)]="cliente.cuitEmpresa"  >
+      <input matInput [(ngModel)]="cliente.cuitEmpresa">
     </mat-form-field>
   </div>
 </form>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="cargarCliente()" cdkFocusInitial>Agregar</button>
+  <div>
+    <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="cargarCliente()" cdkFocusInitial>Agregar</button>
+  </div>
 </div>

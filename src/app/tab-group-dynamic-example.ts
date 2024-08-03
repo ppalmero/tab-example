@@ -29,6 +29,8 @@ export class TabGroupDynamicExample implements OnInit {
 
   private subscription!: Subscription;
 
+  cargaCompleta: boolean = true;
+
   constructor(public dialog: MatDialog, private authService: AutenticacionService) { }
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class TabGroupDynamicExample implements OnInit {
       this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
     }
 
+    this.cargaCompleta = false;
     this.subscription = this.authService.currentUser$.subscribe((isLoggedIn) => {
       console.log("tab- " + isLoggedIn);
       if (isLoggedIn.idEmpleado != 0) {
@@ -45,6 +48,10 @@ export class TabGroupDynamicExample implements OnInit {
       } else {
         this.isLoggedIn = false;
       }
+    });
+
+    this.subscription = this.authService.currentClientes$.subscribe((clientes) => {
+      this.cargaCompleta = true;
     });
   }
 
