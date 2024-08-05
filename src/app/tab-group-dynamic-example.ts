@@ -6,6 +6,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { AutenticacionService } from './comunicacion/autenticacion.service';
 import { DialogDatosPersonalesComponent } from './dialogos/dialog-datos-personales/dialog-datos-personales.component';
+import { Clientes } from './model/clientes';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -27,21 +28,31 @@ export class TabGroupDynamicExample implements OnInit {
 
   usuario: string = "";
 
+  clientes!: Clientes[];
+
   private subscription!: Subscription;
+  private subscriptionCliente!: Subscription;
 
   cargaCompleta: boolean = true;
 
   constructor(public dialog: MatDialog, private authService: AutenticacionService) { }
 
   ngOnInit(): void {
+
+    if (!this.clientes) {
+      this.cargaCompleta = false;
+    }
     if (this.authService.isAuthenticated()) {
       this.isLoggedIn = true;
       this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
+      console.log("usuario logueado");
     }
 
-    this.cargaCompleta = false;
     this.subscription = this.authService.currentUser$.subscribe((isLoggedIn) => {
       console.log("tab- " + isLoggedIn);
+      this.clientes = this.authService.getClientes();
+      console.log("clientes tab-");
+      console.log(this.clientes);
       if (isLoggedIn.idEmpleado != 0) {
         this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
         this.isLoggedIn = true;
@@ -49,8 +60,10 @@ export class TabGroupDynamicExample implements OnInit {
         this.isLoggedIn = false;
       }
     });
-
-    this.subscription = this.authService.currentClientes$.subscribe((clientes) => {
+    
+    this.subscriptionCliente = this.authService.currentClientes$.subscribe((clientes) => {
+      console.log("clientes recibidos....")
+      this.clientes = clientes;
       this.cargaCompleta = true;
     });
   }

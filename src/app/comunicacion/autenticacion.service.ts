@@ -72,6 +72,7 @@ export class AutenticacionService {
       if (empleado.idEmpleado != 0) {
         this.comunicacionService.getListaClientes().subscribe(data => {
           this.clientes = data;
+          this.currentClientesSubject$.next(this.clientes);
           this.setUserLoggedIn(empleado);
         });
       } else {
@@ -117,6 +118,7 @@ export class AutenticacionService {
       this.comunicacionService.getListaClientes().subscribe(data => {
         this.clientes = data;
         this.currentClientesSubject$.next(this.clientes);
+        console.log("Clientes desde el servidor recibidos::::");
       });
       return true;
     } else {

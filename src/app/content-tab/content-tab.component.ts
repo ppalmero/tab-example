@@ -96,6 +96,10 @@ export class ContentTabComponent {
 
     this.clientes = this.authService.getClientes();
 
+    console.log("CLIENTES: ");
+    console.log(this.clientes);
+    this.optionsCliente = this.clientes;
+
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
       const clientesFiltro: Clientes[] = this.optionsCliente.filter(
