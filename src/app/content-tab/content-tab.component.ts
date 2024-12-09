@@ -314,32 +314,6 @@ export class ContentTabComponent {
             });
             this.eventoCerrar.emit(this.ticket);
           }
-          let compra: Compras = {
-            idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
-            fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
-            items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
-          };
-          console.log("---COMPRA---");
-          console.log(compra);
-          /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
-          this.comunicacionService.postCompra(compra).subscribe({
-            next: (compraAgregado) => {
-              console.log("---COMPRA AGREGADA---");
-              console.log(compraAgregado);
-              this._snackBar.openFromComponent(MensajesComponent, {
-                duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
-              });
-              this.eventoCerrar.emit(this.ticket);
-              setTimeout(() => {}, 1000);
-              this.cargaCompleta = true;
-            }, error: (err) => {
-              this._snackBar.openFromComponent(MensajesComponent, {
-                duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
-              });
-              console.log(err);
-              this.cargaCompleta = true;
-            }
-          });
         }
       });
     } else {
