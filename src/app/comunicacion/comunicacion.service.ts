@@ -20,6 +20,10 @@ export class ComunicacionService {
   
   constructor(private http: HttpClient) { }
 
+  getEmpleadosxID(id: number): Observable<Empleados> {
+    return this.http.get<Empleados>(this.apiServer + 'empleado/' + id);
+  }
+
   getListaClientes(): Observable<Clientes[]> {
     // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
     return this.http.get<Clientes[]>(this.apiServer + 'cliente', this.httpOptions);
@@ -54,11 +58,24 @@ export class ComunicacionService {
     );
   }
 
+  postEmpleado(empleado: Empleados) {
+    console.log("comienza envío empleado");
+    return this.http.post<Empleados>(this.apiServer + 'empleado', empleado).pipe(
+      tap((newHero: Empleados) => console.log(`added hero w/ id=${newHero.idEmpleado}`)),
+      catchError(this.handleError<Empleados>('addHero'))
+    );
+  }
+
   iniciarSesion(usuario: Empleados) {
     return this.http.post<Empleados>(this.apiServer + 'empleado/sesion', usuario).pipe(
       tap((newHero: Empleados) => console.log(`added hero w/ id=${newHero.idEmpleado}`)),
       catchError(this.handleError<Empleados>('addHero'))
     );
+  }
+
+  getFechaServidor(): Observable<number> {
+    // Hacer una llamada inicial al servidor y luego hacer llamadas recurrentes cada 5 segundos
+    return this.http.get<number>(this.apiServer + 'consulta/fecha');
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

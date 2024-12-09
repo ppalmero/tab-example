@@ -1,10 +1,12 @@
-<div class="ticket-dialog">
+<div #imprimible class="ticket-dialog">
   <p class="ticket-numero">Generar ticket</p>
   <mat-card class="ticket-card">
     <mat-card-header>
       <mat-card-title>Cliente: {{data.nombreCliente}}</mat-card-title>
       <mat-card-subtitle>Documento: {{data.dniCliente}}</mat-card-subtitle>
       <mat-card-subtitle>Teléfono: {{data.telefonoCliente}}</mat-card-subtitle>
+      <mat-card-subtitle>Fecha de ticket: {{getFechaActual()}}</mat-card-subtitle>
+      <mat-card-subtitle class="ticket-mensaje" style="text-align: left;">A partir de la fecha de generado el ticket, tendrá 7 días corridos para cobrarlo.</mat-card-subtitle>
       <mat-card-subtitle *ngIf="data.checkPedido" class="ticket-mensaje">Requiere flete</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -15,10 +17,11 @@
         </mat-list-item>
       </mat-selection-list>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="onNoClick()">Cancelar</button>
-      <button mat-button [mat-dialog-close]="resultOK">Enviar</button>
-    </mat-card-actions>
+    <div>
+      <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="resultOK" style="float:right">Enviar</button>
+      <button mat-button (click)="imprimir()" style="float:right">Imprimir</button>
+    </div>
   </mat-card>
 </div>
 

@@ -85,17 +85,27 @@ export class ContentTabComponent {
     items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
   }; //agregado por error de tickets iguales con varios items 
 
+  
+  cargaCompleta: boolean = true;
+
   constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService, private authService: AutenticacionService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.miTicket = this.ticket;
 
+    /*this.cargaCompleta = false;
     this.comunicacionService.getListaClientes().subscribe(data => {
       this.clientes = data;
       this.optionsCliente = data;
-      console.log(this.optionsCliente);
-    });
+      this.cargaCompleta = true;
+    });*/
+
+    this.clientes = this.authService.getClientes();
+
+    console.log("CLIENTES: ");
+    console.log(this.clientes);
+    this.optionsCliente = this.clientes;
 
     this.clienteNombreFormControl.valueChanges.subscribe(valor => {
       this.ingresaCliente = valor!;
@@ -263,6 +273,7 @@ export class ContentTabComponent {
 
         if (result == EstadosCompras.NOPAGADA) {
           this.listaItems = [];
+          this.cargaCompleta = false;
           for (let i = 0; i < this.dataSource.data.length; i++) {
             this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: 0, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
           }
@@ -303,6 +314,32 @@ export class ContentTabComponent {
             });
             this.eventoCerrar.emit(this.ticket);
           }
+          let compra: Compras = {
+            idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
+            fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
+            items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
+          };
+          console.log("---COMPRA---");
+          console.log(compra);
+          /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
+          this.comunicacionService.postCompra(compra).subscribe({
+            next: (compraAgregado) => {
+              console.log("---COMPRA AGREGADA---");
+              console.log(compraAgregado);
+              this._snackBar.openFromComponent(MensajesComponent, {
+                duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
+              });
+              this.eventoCerrar.emit(this.ticket);
+              setTimeout(() => {}, 1000);
+              this.cargaCompleta = true;
+            }, error: (err) => {
+              this._snackBar.openFromComponent(MensajesComponent, {
+                duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
+              });
+              console.log(err);
+              this.cargaCompleta = true;
+            }
+          });
         }
       });
     } else {
@@ -314,7 +351,9 @@ export class ContentTabComponent {
 
   agregarCliente() {
 
-    const dialogRefAgregar = this.dialog.open(DialogAgregarClienteComponent);
+    const dialogRefAgregar = this.dialog.open(DialogAgregarClienteComponent, {
+      data: this.clientes,
+    });
 
     dialogRefAgregar.afterClosed().subscribe(result => {
       console.log(result);
@@ -323,6 +362,7 @@ export class ContentTabComponent {
         console.log(cliente);
         this.comunicacionService.postCliente(cliente).subscribe(clienteAgregado => {
           this.clientes.push(clienteAgregado);
+          this.authService.addCliente(clienteAgregado);
           //this.dataSource.data = this.clientes
         });
       }
@@ -363,7 +403,13 @@ export class ContentTabComponent {
 
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.moveToNextInput();
+      let m: Materiales[] = this.optionsMaterial.filter((elemento) => (elemento.idMaterial + " - " + 
+        elemento.nombreMaterial).includes(this.materialesFormControl.value!));
+      if(m.length > 0)
+        {
+          this.materialesFormControl.setValue(m[0].idMaterial + " - " + m[0].nombreMaterial);
+          this.moveToNextInput();
+        }
     }
 
   }

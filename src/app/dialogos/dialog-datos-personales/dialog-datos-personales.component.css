@@ -1,0 +1,27 @@
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    margin: 0px 0 0 50px;
+    width: 70%;
+  }
+
+  .form-group {
+    display: grid;
+    /*grid-template-columns: max-content 1fr;*/
+    grid-gap: 10px;
+  }
+
+  .input-datos{
+    margin-bottom: 0;
+  }
+
+  .div-botones-derecha{
+    margin-top: 50px;
+    text-align: right;
+    width: 70%;
+  }
+
+  mat-label{
+    color: #444;
+}

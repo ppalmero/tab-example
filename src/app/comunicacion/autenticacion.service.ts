@@ -5,6 +5,7 @@ import { Usuario } from '../model/usuario';
 import { Empleados } from '../model/empleados';
 import { ComunicacionService } from './comunicacion.service';
 import { SessionServiceService } from '../login/session-service.service';
+import { Clientes } from '../model/clientes';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,11 @@ export class AutenticacionService {
 
   sucursal: Sucursales = { idSucursal: 0, nombreSucursal: '', direccionSucursal: '', telefonoSucursal: '' };
 
+  private currentClientesSubject$ = new Subject<Clientes[]>();
+  currentClientes$ = this.currentClientesSubject$.asObservable();
+  clientes!: Clientes[];
+  //clientes$ = 
+
   constructor(private sessionService: SessionServiceService, private comunicacionService: ComunicacionService,/*private userStatusService: UserStatusService*/) { }
 
   login(username: string, password: string) {
@@ -64,7 +70,11 @@ export class AutenticacionService {
       console.log("Empleado recibido");
       console.log(empleado);
       if (empleado.idEmpleado != 0) {
-        this.setUserLoggedIn(empleado);
+        this.comunicacionService.getListaClientes().subscribe(data => {
+          this.clientes = data;
+          this.currentClientesSubject$.next(this.clientes);
+          this.setUserLoggedIn(empleado);
+        });
       } else {
         this.logout();
       }
@@ -105,6 +115,11 @@ export class AutenticacionService {
       this.currentUser = { ...usuario };
       this.currentUserSubject$.next(this.currentUser);
       this.sessionService.renovarSesion();
+      this.comunicacionService.getListaClientes().subscribe(data => {
+        this.clientes = data;
+        this.currentClientesSubject$.next(this.clientes);
+        console.log("Clientes desde el servidor recibidos::::");
+      });
       return true;
     } else {
       console.log("Tiempo de conexion: " + tiempoConexion);
@@ -123,6 +138,16 @@ export class AutenticacionService {
     } else {
       return this.sucursal;
     }
-    
+  }
+
+  getClientes(): Clientes[] {
+    return this.clientes;
+  }
+
+  addCliente(c: Clientes){
+    if (this.clientes) {
+      this.clientes.push(c);
+      this.currentClientesSubject$.next(this.clientes);
+    }
   }
 }

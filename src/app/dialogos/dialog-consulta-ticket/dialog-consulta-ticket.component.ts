@@ -21,7 +21,7 @@ export class DialogConsultaTicketComponent implements OnInit {
   selectedMaster: Compras; // Arreglo para almacenar los datos maestros seleccionados
   // Objeto para almacenar el maestro seleccionado
 
-  displayedColumns: string[] = ['idCompra', 'cliente', 'precioTotalCompra', 'estado', 'fechaCompra'];
+  displayedColumns: string[] = ['idCompra', 'cliente', 'estado', 'fechaCompra'];
   dataSource: MatTableDataSource<Compras>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

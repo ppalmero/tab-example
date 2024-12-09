@@ -5,6 +5,8 @@ import { DialogConsultaTicketComponent } from './dialogos/dialog-consulta-ticket
 import { MatTabGroup } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { AutenticacionService } from './comunicacion/autenticacion.service';
+import { DialogDatosPersonalesComponent } from './dialogos/dialog-datos-personales/dialog-datos-personales.component';
+import { Clientes } from './model/clientes';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -26,24 +28,43 @@ export class TabGroupDynamicExample implements OnInit {
 
   usuario: string = "";
 
+  clientes!: Clientes[];
+
   private subscription!: Subscription;
+  private subscriptionCliente!: Subscription;
+
+  cargaCompleta: boolean = true;
 
   constructor(public dialog: MatDialog, private authService: AutenticacionService) { }
 
   ngOnInit(): void {
+
+    if (!this.clientes) {
+      this.cargaCompleta = false;
+    }
     if (this.authService.isAuthenticated()) {
       this.isLoggedIn = true;
       this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
+      console.log("usuario logueado");
     }
 
     this.subscription = this.authService.currentUser$.subscribe((isLoggedIn) => {
       console.log("tab- " + isLoggedIn);
+      this.clientes = this.authService.getClientes();
+      console.log("clientes tab-");
+      console.log(this.clientes);
       if (isLoggedIn.idEmpleado != 0) {
         this.usuario = this.authService.getCurrentUser().usuarioEmpleado;
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
       }
+    });
+    
+    this.subscriptionCliente = this.authService.currentClientes$.subscribe((clientes) => {
+      console.log("clientes recibidos....")
+      this.clientes = clientes;
+      this.cargaCompleta = true;
     });
   }
 
@@ -88,6 +109,14 @@ export class TabGroupDynamicExample implements OnInit {
     const elemento = document.getElementById(pestana);
     console.log(elemento?.children[2].firstChild);
     elemento!.children[2].firstChild!.textContent = "Ticket de: " + tabCliente[1];
+  }
+
+  datosPersonales() {
+    const dialogRefConsultar = this.dialog.open(DialogDatosPersonalesComponent);
+
+    dialogRefConsultar.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   cerrarSesion() {

@@ -1,22 +1,23 @@
 <h1 mat-dialog-title>Nuevo cliente</h1>
-<div mat-dialog-content>
-  <mat-form-field class="mat-input mat-input-izq">
-    <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="cliente.nombreCliente">
-  </mat-form-field>
-  <mat-form-field class="mat-input">
-    <mat-label>Apellido</mat-label>
-    <input matInput [(ngModel)]="cliente.apellidoCliente">
-  </mat-form-field>
-  <mat-form-field class="mat-input mat-input-izq">
-    <mat-label>DNI</mat-label>
-    <input matInput [(ngModel)]="cliente.dniCliente">
-  </mat-form-field>
-  <mat-form-field class="mat-input">
-    <mat-label>Teléfono</mat-label>
-    <input matInput [(ngModel)]="cliente.telefonoCliente">
-  </mat-form-field>
-  <h2 mat-dialog-title>Datos empresa (completar sólo si el cliente representa a una empresa)</h2>
+<form [formGroup]="formulario">
+  <div mat-dialog-content>
+    <mat-form-field class="mat-input mat-input-izq">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="cliente.nombreCliente" formControlName="inputNombre" required>
+    </mat-form-field>
+    <mat-form-field class="mat-input">
+      <mat-label>Apellido</mat-label>
+      <input matInput [(ngModel)]="cliente.apellidoCliente" formControlName="inputApellido" required>
+    </mat-form-field>
+    <mat-form-field class="mat-input mat-input-izq">
+      <mat-label>DNI</mat-label>
+      <input matInput [(ngModel)]="cliente.dniCliente" formControlName="inputDNI" required>
+    </mat-form-field>
+    <mat-form-field class="mat-input">
+      <mat-label>Teléfono</mat-label>
+      <input matInput [(ngModel)]="cliente.telefonoCliente" formControlName="inputTelefono" required>
+    </mat-form-field>
+    <h2 mat-dialog-title>Datos empresa (completar sólo si el cliente representa a una empresa)</h2>
     <mat-form-field class="mat-input mat-input-izq">
       <mat-label>Nombre empresa</mat-label>
       <input matInput [(ngModel)]="cliente.nombreEmpresa">
@@ -25,8 +26,11 @@
       <mat-label>CUIT empresa</mat-label>
       <input matInput [(ngModel)]="cliente.cuitEmpresa">
     </mat-form-field>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="cliente" cdkFocusInitial>Agregar</button>
+  </div>
+</form>
+<div mat-dialog-actions>
+  <div>
+    <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="cargarCliente()" cdkFocusInitial>Agregar</button>
   </div>
 </div>
