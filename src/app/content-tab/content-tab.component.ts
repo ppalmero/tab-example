@@ -79,6 +79,12 @@ export class ContentTabComponent {
   checkPedido: boolean = false;
   seleccion: boolean;
 
+  compraAgegar: Compras = {
+    idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
+    fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: { idCliente: -1, apellidoCliente: "", cuitEmpresa: 0, dniCliente: 0, nombreCliente: "", nombreEmpresa: "", telefonoCliente: "" },
+    items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
+  }; //agregado por error de tickets iguales con varios items 
+
   constructor(public dialog: MatDialog, private comunicacionService: ComunicacionService, private authService: AutenticacionService,
     private _snackBar: MatSnackBar) { }
 
@@ -110,7 +116,7 @@ export class ContentTabComponent {
         const materialesFiltro: Materiales[] = this.optionsMaterial.filter(
           (elemento) => (elemento.idMaterial + " - " + elemento.nombreMaterial).includes(valor!));
         if (materialesFiltro.length > 0) {
-      //this.moveToNextInput();
+          //this.moveToNextInput();
           this.email.nativeElement.innerText = materialesFiltro[0].tipoMedidaMaterial;
         }
       }
@@ -161,8 +167,8 @@ export class ContentTabComponent {
   }
 
   agregarMaterial() {
-    if (!this.materialesFormControl.value || 
-      this.optionsMaterial.filter((elemento) => (elemento.idMaterial + " - " + 
+    if (!this.materialesFormControl.value ||
+      this.optionsMaterial.filter((elemento) => (elemento.idMaterial + " - " +
         elemento.nombreMaterial).includes(this.materialesFormControl.value!)).length == 0) {
       this._snackBar.openFromComponent(MensajesComponent, {
         duration: 5 * 1000, announcementMessage: "Ingrese material", data: { icono: "info", color: "mensaje-info" }
@@ -256,6 +262,7 @@ export class ContentTabComponent {
         console.log(this.dataSource.data);
 
         if (result == EstadosCompras.NOPAGADA) {
+          this.listaItems = [];
           for (let i = 0; i < this.dataSource.data.length; i++) {
             this.listaItems.push({ cantidadItemCompra: this.dataSource.data[i].weight, incrementoPrecioItemCompra: 0, precioItemCompra: -1, material: this.materiales.find(m => m.idMaterial == this.dataSource.data[i].idMaterial)! });
           }
@@ -263,29 +270,39 @@ export class ContentTabComponent {
             idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222,
             telefonoEmpleado: "231233", usuarioEmpleado: "user", contraseniaEmpleado: "user", permisoEmpleado: ""
           };*/
-          let compra: Compras = {
-            idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
-            fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
-            items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
-          };
-          console.log("---COMPRA---");
-          console.log(compra);
-          /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
-          this.comunicacionService.postCompra(compra).subscribe({
-            next: (compraAgregado) => {
-              console.log("---COMPRA AGREGADA---");
-              console.log(compraAgregado);
-              this._snackBar.openFromComponent(MensajesComponent, {
-                duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
-              });
-              this.eventoCerrar.emit(this.ticket);
-            }, error: (err) => {
-              this._snackBar.openFromComponent(MensajesComponent, {
-                duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
-              });
-              console.log(err);
-            }
-          });
+          if (this.compraAgegar.idCompra > 0) {
+            this.compraAgegar = {
+              idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
+              fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
+              items: this.listaItems, empleado: this.authService.getCurrentUser(), sucursal: this.authService.getCurrentSucursal()
+            };
+            console.log("---COMPRA---");
+            console.log(this.compraAgegar);
+            /*** ENVIAR AL SERVIDOR - FORMA CORRECTA DE USAR SUBSCRIBE CON ERROR*/
+            this.comunicacionService.postCompra(this.compraAgegar).subscribe({
+              next: (compraAgregado) => {
+                console.log("---COMPRA AGREGADA---");
+                console.log(compraAgregado);
+                this.compraAgegar = compraAgregado as Compras;
+                console.log("---COMPRA AGREGADA---");
+                console.log(compraAgregado);
+                this._snackBar.openFromComponent(MensajesComponent, {
+                  duration: 5 * 1000, announcementMessage: "ticket generado", data: { icono: "task", color: "mensaje-ok" }
+                });
+                this.eventoCerrar.emit(this.ticket);
+              }, error: (err) => {
+                this._snackBar.openFromComponent(MensajesComponent, {
+                  duration: 5 * 1000, announcementMessage: "error al generar ticket", data: { icono: "error", color: "mensaje-nook" }
+                });
+                console.log(err);
+              }
+            });
+          } else {
+            this._snackBar.openFromComponent(MensajesComponent, {
+              duration: 5 * 1000, announcementMessage: "El ticket ya fue generado", data: { icono: "error", color: "mensaje-nook" }
+            });
+            this.eventoCerrar.emit(this.ticket);
+          }
         }
       });
     } else {
@@ -314,10 +331,10 @@ export class ContentTabComponent {
 
   onInput(event: any) {
     console.log("--GANO EL FOCO ");
-    
+
     if (this.seleccion) {
       this.moveToNextInput();
-      this.seleccion = false; 
+      this.seleccion = false;
     }
   }
 
@@ -340,7 +357,7 @@ export class ContentTabComponent {
     event.target.select();
   }
 
-  mostrarCambio(event: any){
+  mostrarCambio(event: any) {
     console.log("--Valor input materiales" + event.target.value);
   }
 
@@ -348,6 +365,6 @@ export class ContentTabComponent {
     if (event.key === 'Enter') {
       this.moveToNextInput();
     }
-    
+
   }
 }
