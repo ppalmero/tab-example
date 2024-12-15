@@ -281,7 +281,7 @@ export class ContentTabComponent {
             idEmpleado: 1, nombreEmpleado: "Juan", apellidoEmpleado: "del Valle", dniEmpleado: 234222,
             telefonoEmpleado: "231233", usuarioEmpleado: "user", contraseniaEmpleado: "user", permisoEmpleado: ""
           };*/
-          if (this.compraAgegar.idCompra > 0) {
+          if (this.compraAgegar.idCompra < 0) {
             this.compraAgegar = {
               idCompra: -1, precioTotalCompra: -1, estado: EstadosCompras.NOPAGADA, fechaCompra: 0,
               fleteCompra: this.checkPedido ? 1 : 0, fleteValorCompra: 0, incrementoCompra: 0, cliente: this.clienteElegido,
